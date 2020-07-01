@@ -7,7 +7,7 @@
 -------
 
 ### youtube video (https://www.youtube.com/watch?v=dbSg6R4Nc6c)
-**NEW** mom video is what I chose as my favorite video. Even though I have a seven year old I am starting completley over. I am already completley **overwhelmed** in *BI485* at the moment, but plan to do my best.
+**NEW** mom video is what I chose as my favorite video. Even though I have a seven year old I am starting completely over. I am already completley **overwhelmed** in *BI485* at the moment, but plan to do my best.
 
 -------
 
