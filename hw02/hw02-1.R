@@ -63,3 +63,49 @@ d_merriami
 d_merriami <- d_merriami + 5
 d_merriami
 
+# add together the number of individuals of each species 
+
+# store the result in total_k_rats
+
+total_k_rats <- d_merriami + d_ordii
+
+# Assign 1000 to a variable called area_sampled
+
+area_sample <- 1000 
+
+# Divide total_k_rats by area_sampled to calculate density
+
+density <- total_k_rats / area_sample
+
+# Show the value of density
+
+density
+
+# Section 1.5 Basic data types of R
+
+# Assign 42 to the variable numeric_var
+
+numeric_var <- 42
+
+# Assign 'Dipodomys merriami' to the variable species_name
+
+species_name <- 'Dipodomys merriami'
+
+# Assign TRUE to the variable is_mammal
+
+is_mammal <- TRUE
+
+# Section 1.6 What is the data type?
+
+# Check class of numeric_var
+
+class (numeric_var)
+
+# Check class of species_name
+
+class(species_name)
+
+# Check class of is_mammal
+
+class(is_mammal)
+
