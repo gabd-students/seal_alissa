@@ -30,7 +30,7 @@ cultures_with_pplo <- c(4.6, 4.7, 4.8, 4.9, 4.8)
 
 ## Create days_sampled vector
 
-days_sampled <- c('Day 0', 'Day2', 'Day 4', 'Day 6', 'Day 8')
+days_sampled <- c('Day 0', 'Day 2', 'Day 4', 'Day 6', 'Day 8')
 
 ## Name your two data vectors with the 'days_sampled' vector
 
@@ -122,7 +122,14 @@ cultures_with_pplo[c('Day 2', 'Day 4')]
 
 cell_counts_without_pplo_greater_than_100000 <- c(cell_counts_without_pplo>1000000)
 
-## Use that vector to show the days from culture_without_pplo greater than 100000
+## Use that vector to show the days and actual cell count from culture_without_pplo greater than 100000
 
-cell_counts_without_pplo_greater_than_100000
-  
+cell_counts_without_pplo[cell_counts_without_pplo_greater_than_100000]
+
+## Use cell_counts_with_pplo to create a vector for cell counts >50000 and <75000
+
+cell_counts_with_pplo_between_50000_75000 <- cell_counts_with_pplo>50000 & cell_counts_with_pplo<75000
+
+## Use that vector to show the days and actual cell count from cultures_with_pplo
+
+cell_counts_with_pplo[cell_counts_with_pplo_between_50000_75000]
