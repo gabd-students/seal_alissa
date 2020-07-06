@@ -114,7 +114,7 @@ four_diets['Replicate 3',]
 
 four_diets['Replicate 5', 'horsebean']
 
-# 3.7 A little arithmetic with matrices
+# Section 3.7 A little arithmetic with matrices
 
 ## Convert grams to ounces
 
