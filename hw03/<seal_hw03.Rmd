@@ -79,3 +79,14 @@ kable(chicks_lm)
 
 Attempted to run kable(chicks_lm) in both the console and as script and received an error message both times. 
 
+```{r}
+trees_lm <- lm(Girth ~ Height, data = trees)
+```
+
+
+```{r}
+xtable(trees_lm) %>% kable()
+```
+
+
+Footnote: DONE! I think... 

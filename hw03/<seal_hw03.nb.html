@@ -1760,9 +1760,6 @@ summary {
 library(knitr)
 library(xtable)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gbGlicmFyeSh4dGFibGUpIDogdGhlcmUgaXMgbm8gcGFja2FnZSBjYWxsZWQg4oCYeHRhYmxl4oCZXG4ifQ== -->
-<pre><code>Error in library(xtable) : there is no package called ‘xtable’</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -2041,8 +2038,57 @@ F-statistic: 15.36 on 5 and 65 DF,  p-value: 5.936e-10</code></pre>
 <!-- rnb-text-begin -->
 <p>Attempted to run kable(chicks_lm) in both the console and as script and received an error message both times.</p>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudHJlZXNfbG0gPC0gbG0oR2lydGggfiBIZWlnaHQsIGRhdGEgPSB0cmVlcylcbmBgYCJ9 -->
+<pre class="r"><code>trees_lm &lt;- lm(Girth ~ Height, data = trees)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueHRhYmxlKHRyZWVzX2xtKSAlPiUga2FibGUoKVxuYGBgIn0= -->
+<pre class="r"><code>xtable(trees_lm) %&gt;% kable()</code></pre>
+<!-- rnb-source-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiQWxpc3NhJ3MgUiBOb3RlYm9vayBEaXNhc3RlciIKYXV0aG9yOiAiQWxpc3NhIFNlYWwiCmRhdGU6ICInciBmb3JtYXQoU3lzLnRpbWUoKSwgJyVkICVCICVZJylgIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKZWRpdG9yIG9wdGlvbnM6IAogIGNodW5rX291dHB1dF90cGU6IGlubGluZQotLS0KClRoaXMgaXMgYW4gW1IgTWFya2Rvd25dKGh0dHA6Ly9ybWFya2Rvd24ucnN0dWRpby5jb20pIE5vdGVib29rLiBXaGVuIHlvdSBleGVjdXRlIGNvZGUgd2l0aGluIHRoZSBub3RlYm9vaywgdGhlIHJlc3VsdHMgYXBwZWFyIGJlbmVhdGggdGhlIGNvZGUuIAoKYGBge3J9CmxpYnJhcnkodGlkeXZlcnNlKQpsaWJyYXJ5KGtuaXRyKQpsaWJyYXJ5KHh0YWJsZSkKYGBgCgpgYGB7cn0KYW5zY29tYmUKYGBgCgpgYGB7cn0KYW5zYyA8LQogIGJpbmRfY29scygKICAgIGFuc2NvbWJlICU+JSAKICAgICAgc2VsZWN0KG1hdGNoZXMoIngiKSkgJT4lIAogICAgICBnYXRoZXIoZGF0YXNldCwgIngiKSwKICAgIGFuc2NvbWJlICU+JSAKICAgICAgc2VsZWN0KG1hdGNoZXMoInkiKSkgJT4lIAogICAgICBnYXRoZXIoa2V5LCAieSIpCiAgKSAlPiUgCiAgc2VsZWN0KC1rZXkpICU+JSAKICBtdXRhdGUoZGF0YXNldCA9IGdzdWIoIngiLCAiIiwgZGF0YXNldCkpICU+JSAKICBhc190aWJibGUoKQpgYGAKYGBge3J9CmFuc2MKYGBgCgoKYGBge3J9CmFuc2MgJT4lIGdncGxvdChhZXMoeCwgeSwgY29sb3IgPSBkYXRhc2V0KSkgKyAKICBnZW9tX3BvaW50KCkgKwogIGZhY2V0X3dyYXAofmRhdGFzZXQsIG5jb2wgPSAyKQpgYGAKCmBgYHtyfQpoZWFkKGlyaXMpCmBgYAoKYGBge3J9CmthYmxlKGhlYWQoaXJpcyksIAogICAgICBhbGlnbj0gYygibCIsICJjIiwgInIiLCAiYyIsICJsIiksCiAgICAgIGNvbC5uYW1lcyA9IGMoIlNlcGFsIExlbmd0aCIsICJTZXBhbCBXaWR0aCIsICJTZXBhbCBMZW5ndGgiLCAiU2VwYWwgV2lkdGgiLCAiU3BlY2llcyIpKQpgYGAKCmBgYHtyfQprYWJsZShoZWFkKGFpcnF1YWxpdHkpLCAKICAgICAgYWxpZ249IGMoInIiLCAiciIsICJjIiwgImMiLCAibCIsImwiKSwKICAgICAgY29sLm5hbWVzID0gYygiT3pvbmUgKHBwYikiLCAiU29sYXIgUiAobGFuZykiLCAiV2luZCAobXBoKSIsICJUZW1wICjCsEYpIiwgIk1vbnRoIiwiRGF5IikpCiAgICAgIApgYGAKCmBgYHtyfQprYWJsZShjaGlja3NfbG0pCmBgYAoKYGBge3J9CmNoaWNrc19sbSA8LSBsbSh3ZWlnaHQgfiBmZWVkLCBkYXRhID0gY2hpY2t3dHMpCmBgYAoKYGBge3J9CnN1bW1hcnkoY2hpY2tzX2xtKQpgYGAKCmBgYHtyfQprYWJsZShjaGlja3NfbG0pCmBgYAoKQXR0ZW1wdGVkIHRvIHJ1biBrYWJsZShjaGlja3NfbG0pIGluIGJvdGggdGhlIGNvbnNvbGUgYW5kIGFzIHNjcmlwdCBhbmQgcmVjZWl2ZWQgYW4gZXJyb3IgbWVzc2FnZSBib3RoIHRpbWVzLiAKCg==</div>
+<!-- rnb-html-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImtuaXRfYXNpcyJdLCJzaXppbmdQb2xpY3kiOltdfX0= -->
+
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Estimate</th>
+<th align="right">Std. Error</th>
+<th align="right">t value</th>
+<th align="right">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-6.1883945</td>
+<td align="right">5.9601994</td>
+<td align="right">-1.038286</td>
+<td align="right">0.3077168</td>
+</tr>
+<tr class="even">
+<td align="left">Height</td>
+<td align="right">0.2557471</td>
+<td align="right">0.0781583</td>
+<td align="right">3.272169</td>
+<td align="right">0.0027578</td>
+</tr>
+</tbody>
+</table>
+
+
+<!-- rnb-html-end -->
+
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Footnote: DONE! I think…</p>
+<!-- rnb-text-end -->
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiQWxpc3NhJ3MgUiBOb3RlYm9vayBEaXNhc3RlciIKYXV0aG9yOiAiQWxpc3NhIFNlYWwiCmRhdGU6ICInciBmb3JtYXQoU3lzLnRpbWUoKSwgJyVkICVCICVZJylgIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKZWRpdG9yIG9wdGlvbnM6IAogIGNodW5rX291dHB1dF90cGU6IGlubGluZQotLS0KClRoaXMgaXMgYW4gW1IgTWFya2Rvd25dKGh0dHA6Ly9ybWFya2Rvd24ucnN0dWRpby5jb20pIE5vdGVib29rLiBXaGVuIHlvdSBleGVjdXRlIGNvZGUgd2l0aGluIHRoZSBub3RlYm9vaywgdGhlIHJlc3VsdHMgYXBwZWFyIGJlbmVhdGggdGhlIGNvZGUuIAoKYGBge3J9CmxpYnJhcnkodGlkeXZlcnNlKQpsaWJyYXJ5KGtuaXRyKQpsaWJyYXJ5KHh0YWJsZSkKYGBgCgpgYGB7cn0KYW5zY29tYmUKYGBgCgpgYGB7cn0KYW5zYyA8LQogIGJpbmRfY29scygKICAgIGFuc2NvbWJlICU+JSAKICAgICAgc2VsZWN0KG1hdGNoZXMoIngiKSkgJT4lIAogICAgICBnYXRoZXIoZGF0YXNldCwgIngiKSwKICAgIGFuc2NvbWJlICU+JSAKICAgICAgc2VsZWN0KG1hdGNoZXMoInkiKSkgJT4lIAogICAgICBnYXRoZXIoa2V5LCAieSIpCiAgKSAlPiUgCiAgc2VsZWN0KC1rZXkpICU+JSAKICBtdXRhdGUoZGF0YXNldCA9IGdzdWIoIngiLCAiIiwgZGF0YXNldCkpICU+JSAKICBhc190aWJibGUoKQpgYGAKYGBge3J9CmFuc2MKYGBgCgoKYGBge3J9CmFuc2MgJT4lIGdncGxvdChhZXMoeCwgeSwgY29sb3IgPSBkYXRhc2V0KSkgKyAKICBnZW9tX3BvaW50KCkgKwogIGZhY2V0X3dyYXAofmRhdGFzZXQsIG5jb2wgPSAyKQpgYGAKCmBgYHtyfQpoZWFkKGlyaXMpCmBgYAoKYGBge3J9CmthYmxlKGhlYWQoaXJpcyksIAogICAgICBhbGlnbj0gYygibCIsICJjIiwgInIiLCAiYyIsICJsIiksCiAgICAgIGNvbC5uYW1lcyA9IGMoIlNlcGFsIExlbmd0aCIsICJTZXBhbCBXaWR0aCIsICJTZXBhbCBMZW5ndGgiLCAiU2VwYWwgV2lkdGgiLCAiU3BlY2llcyIpKQpgYGAKCmBgYHtyfQprYWJsZShoZWFkKGFpcnF1YWxpdHkpLCAKICAgICAgYWxpZ249IGMoInIiLCAiciIsICJjIiwgImMiLCAibCIsImwiKSwKICAgICAgY29sLm5hbWVzID0gYygiT3pvbmUgKHBwYikiLCAiU29sYXIgUiAobGFuZykiLCAiV2luZCAobXBoKSIsICJUZW1wICjCsEYpIiwgIk1vbnRoIiwiRGF5IikpCiAgICAgIApgYGAKCmBgYHtyfQprYWJsZShjaGlja3NfbG0pCmBgYAoKYGBge3J9CmNoaWNrc19sbSA8LSBsbSh3ZWlnaHQgfiBmZWVkLCBkYXRhID0gY2hpY2t3dHMpCmBgYAoKYGBge3J9CnN1bW1hcnkoY2hpY2tzX2xtKQpgYGAKCmBgYHtyfQprYWJsZShjaGlja3NfbG0pCmBgYAoKQXR0ZW1wdGVkIHRvIHJ1biBrYWJsZShjaGlja3NfbG0pIGluIGJvdGggdGhlIGNvbnNvbGUgYW5kIGFzIHNjcmlwdCBhbmQgcmVjZWl2ZWQgYW4gZXJyb3IgbWVzc2FnZSBib3RoIHRpbWVzLiAKCmBgYHtyfQp0cmVlc19sbSA8LSBsbShHaXJ0aCB+IEhlaWdodCwgZGF0YSA9IHRyZWVzKQpgYGAKCgpgYGB7cn0KeHRhYmxlKHRyZWVzX2xtKSAlPiUga2FibGUoKQpgYGAKCgpGb290bm90ZTogRE9ORSEgSSB0aGluay4uLiAK</div>
 
 
 
