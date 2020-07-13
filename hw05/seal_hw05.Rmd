@@ -1,0 +1,143 @@
+---
+title: "HW05 Part 1: Graphing Biological Data"
+author: "Alissa Seal"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r}
+install.packages("tidyverse")
+library(tidyverse)
+```
+
+#### Plot 1
+
+```{r}
+data(trees)
+```
+
+```{r}
+?trees
+```
+
+```{r}
+ggplot(data = trees)+
+  geom_point(mapping = aes(x=Height, y=Girth))
+```
+
+Looking at the graph provided, as height increases, so does girth. 
+
+#### Plot 2
+
+```{r}
+data("lynx")
+```
+
+```{r}
+?lynx
+```
+
+```{r}
+year <- c(1821:1934)
+```
+
+```{r}
+class(lynx)
+```
+
+```{r}
+pelts <- as.vector(lynx)
+```
+
+
+```{r}
+lynx_pelts <- data.frame(year, pelts)
+```
+
+```{r}
+ggplot(data = lynx_pelts)+
+  geom_smooth(mapping = aes(x= year, y= pelts, color= "maroon"))
+```
+
+There is a decline in the number of pelts recorded between 1840-1880. 
+
+#### Plot 3
+
+```{r}
+data("iris")
+```
+
+```{r}
+?iris
+```
+
+```{r}
+ggplot(data = iris, mapping = aes(x= Petal.Length, y= Petal.Width))+ labs(y= "Petal Width", x= "Petal Length") + geom_point(mapping = aes(color= Species, shape= Species, point= 2))
+```
+
+Species setosa yields the smallest petals, while virginica yields the argest.
+
+#### Plot 4
+
+```{r}
+data("msleep")
+```
+
+```{r}
+?msleep
+```
+
+```{r}
+ggplot(data = msleep, mapping = aes(x= vore, y= sleep_rem))+
+  geom_violin(fill = "gray30")
+```
+Herbivores and omnivores spend the largest time in rem stage sleep.
+
+#### Plot 5
+
+```{r}
+ggplot(data = msleep, mapping = aes(x= vore, y= sleep_rem))+
+  geom_violin(fill = "gray70")
+```
+
+Herbivores and omnivores spend the largest time in rem stage sleep.
+Violin plot is a mirrored density plot.  Fill allows the densities to be displayed on a grayscale, ranging from a solid fill to a mere outline.
+
+#### Plot 7 because there is not a plot 6. 
+
+```{r}
+ggplot(data = msleep, mapping = aes(x= order, y= sleep_total))+
+  geom_boxplot()+
+  coord_flip()
+```
+Coordinate flip was helpful with this dataset because the order labels are lengthy. 
+
+#### Plot 8
+
+```{r}
+ggplot(data = msleep, mapping = aes(x= conservation, y= awake))+ 
+  labs(y= "Awake", x= "Conservation")+ 
+  geom_boxplot()+ geom_jitter()+
+  geom_point(mapping = aes(color= conservation))+guides(col=guide_legend("Conservation"))+
+  coord_flip()
+```
+
+The use of coord_flip allows the data to be more spread out instead of compacted. Therefore, making it easier to read. 
+
+#### Plot 9
+
+```{r}
+ggplot(data = msleep, mapping = aes(x= sleep_total, y= bodywt))+
+  geom_point(mapping = aes(color=vore))
+```
+
+Herbivores have larger body weights compared to the other vore types.
+
+```{r}
+ggplot(data = msleep, mapping = aes(x= sleep_total, y= brainwt))+
+  geom_point(mapping = aes(color=conservation))+facet_wrap(~vore, ncol = 3)
+```
+
+Insectivores tend to have longer total sleep cycles.
