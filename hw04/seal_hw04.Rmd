@@ -27,6 +27,23 @@ If you get an error, then you did not install the `tidyverse` package like you w
 
 ### Section 3.2: First steps
 
+Load mpg data 
+
+```{r}
+ggplot2::mpg
+```
+
+## This chunk displayed information about a vehicle manufacturer, model, engine displacement, year, number of cylinders, type of transmission, drive train, city mpg, highway mpg, fuel type, and class of car.
+
+Create a scatterplot
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+## This chunk mapped the engine displacement verse and highway mpg. Plotted these values on a graph. 
+
 Enter your code chunks for Section 3.2 here.
 
 Get in the habit of entering a brief description of what each chunk of code does. Enter this above the chunk, like I did in Section 3.1.
@@ -70,6 +87,39 @@ ggplot(data = mpg)+
 
 ### Section 3.3: Aesthetic mappings
 
+Scatterplot with car class coded
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = class))
+```
+
+Scatterplot coded by car size 
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, size = class))
+```
+
+Scatterplot with alpha aesthetic
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, alpha = class))
+```
+
+Scatterplot with shape aesthetic 
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, shape = class))
+```
+
+Scatterplot with manual color added
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy), color = "blue")
+```
 
 
 #### Section 3.3 questions
@@ -138,6 +188,22 @@ ggplot(data = mpg)+
 
 ### Section 3.5: Facets
 
+Split plot into facets
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_wrap(~ class, nrow = 2)
+```
+
+Split plot into variables
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_grid(drv ~ cyl)
+```
+
 
 
 #### Section 3.5 questions
@@ -200,6 +266,73 @@ ggplot(data = mpg) +
 
 
 ### Section 3.6: Geometric objects
+
+Scatterplot of mpg data
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+Line graph of mpg data
+```{r}
+ggplot(data = mpg) + 
+  geom_smooth(mapping = aes(x = displ, y = hwy))
+```
+
+Linegraph divided in 3 aesthetic line types
+
+```{r}
+ggplot(data = mpg) + 
+  geom_smooth(mapping = aes(x = displ, y = hwy, linetype = drv))
+```
+
+Line Graph
+
+```{r}
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy))
+```
+
+Line graph with line types showing vehicle drive train types
+
+```{r}
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy, group = drv))
+```
+Line graph with drive train type indicated with multiple colored lines
+
+```{r}
+ggplot(data = mpg) +
+  geom_smooth(
+    mapping = aes(x = displ, y = hwy, color = drv),
+    show.legend = FALSE
+  )
+```
+
+Scatterplot and line graph of mpg data
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  geom_smooth(mapping = aes(x = displ, y = hwy))
+```
+
+Line graph and scatterplot with color aesthetic
+
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(color = class)) + 
+  geom_smooth()
+```
+
+Line graph and scatterplot with color aesthetic without standard deviation
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(color = class)) + 
+  geom_smooth(data = filter(mpg, class == "subcompact"), se = FALSE)
+```
 
 
 
@@ -291,6 +424,56 @@ ggplot(data = mpg) +
 
 
 ### Section 3.8 Position adjustments
+Bar graph
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, colour = cut))
+```
+Colored Bar Graph
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = cut))
+```
+
+Bar graph with position adjustment
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity))
+```
+
+Bar graph with low alpha position adjustment
+```{r}
+ggplot(data = diamonds, mapping = aes(x = cut, fill = clarity)) + 
+  geom_bar(alpha = 1/5, position = "identity")
+```
+
+Bar graph without fill
+
+```{r}
+ggplot(data = diamonds, mapping = aes(x = cut, colour = clarity)) + 
+  geom_bar(fill = NA, position = "identity")
+```
+
+Bar graph with fill
+
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "fill")
+```
+
+Bar graph with dodge position
+
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge")
+```
+
+Scatterplot with jitter
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy), position = "jitter")
+```
 
 
 #### Section 3.8 Questions
@@ -321,6 +504,15 @@ ggplot(mpg, aes(displ, hwy)) +
 ### Section 3.9: Coordinate systems
 
 **Note:** Read about and do only the code chunk associated with `coord_flip()`. `coord_flip()` is a great layer to use when you have categorical data with longish names as it makes the text easier to read.
+
+Boxplot
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = class, y = hwy)) + 
+  geom_boxplot()
+```
+
+Boxplot with coordinates flipped
 
 ```{r}
 ggplot(data = mpg, mapping = aes(x = class, y = hwy)) + 
