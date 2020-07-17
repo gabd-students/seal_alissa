@@ -63,9 +63,16 @@ Remove sites with missing count data
 ```{r}
 tern_data %>% filter(complete.cases(.))
 ```
+Assign results to a variable 
 
 ```{r}
-tern_data %>% 
+tern_data <- tern_data %>% filter(complete.cases(.))
+```
+
+Tidy Data
+
+```{r}
+tern_2 <- complete_terns %>%
   pivot_longer(c(`AR`, `AL`, `AC`, `BR`, `BL`, `BC`, `JR`, `JL`, `JC`), names_to = "sites")
 ```
 
