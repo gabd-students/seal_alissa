@@ -1,0 +1,14 @@
+---
+title: "HW07 Part 1:Data Import and Wrangling 1"
+author: "Alissa Seal"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+
+```
+
