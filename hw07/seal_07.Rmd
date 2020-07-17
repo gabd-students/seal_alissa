@@ -49,6 +49,57 @@ ggplot(data = limpets_data, mapping = aes(x= site, y= Length)) +
 WP and DP are the two sites that have outliers. The protected sites have larger limpets. 
 
 
+Roseate Terns
+
+The data is NOT  tidy. 
+
+Tern data
+
+```{r}
+tern_data <- read_tsv(file.path(file_path, "roseate_terns.txt"))
+```
+Remove sites with missing count data
+
+```{r}
+tern_data %>% filter(complete.cases(.))
+```
+
+```{r}
+tern_data %>% 
+  pivot_longer(c(`AR`, `AL`, `AC`, `BR`, `BL`, `BC`, `JR`, `JL`, `JC`), names_to = "sites")
+```
+
+```{r}
+
+```
+
+
+
+
+
+Make a line plot
+
+```{r}
+ggplot(data=tern_data, aes(x=year, y=sites))+
+  geom_line()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
