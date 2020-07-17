@@ -20,7 +20,7 @@ Load Limpets Data
 ```{r}
 limpets_data <- read_csv(file.path(file_path, "limpets.csv"))
 ```
-
+The limpets data is tidy. 
 
 Use the column types argument
 
@@ -28,25 +28,25 @@ Use the column types argument
 col_types = "ncc"
 ```
 
-```{r}
+Make the sites column an ordered factor
 
+```{r}
+limpets_data$site <- factor(limpets_data$Site, levels = c("PBL", "KNRM", "VBG", "WP", "PF", "DP", "SIO", "CTZ1", "CTZ2", "CNM"))
 ```
 
+Check sorting
 
+```{r}
+limpets_data
+```
 
+Make a boxplot
+```{r}
+ggplot(data = limpets_data, mapping = aes(x= site, y= Length)) +
+  geom_boxplot(aes(color=Protected)) + labs(y="Length(mm)", x = "Site")
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
+WP and DP are the two sites that have outliers. The protected sites have larger limpets. 
 
 
 
