@@ -1,7 +1,10 @@
 ---
 title: "HW07 Part 1:Data Import and Wrangling 1"
 author: "Alissa Seal"
+date: "`r format(sys.time(), '%d %B %Y)`"
 output: html_notebook
+editor_options: 
+  chunk_output_type: inline
 ---
 
 ```{r}
@@ -9,6 +12,44 @@ library(tidyverse)
 ```
 
 ```{r}
+file_path <- "../data" 
+```
+
+Load Limpets Data
+
+```{r}
+limpets_data <- read_csv(file.path(file_path, "limpets.csv"))
+```
+
+
+Use the column types argument
+
+```{r}
+col_types = "ncc"
+```
+
+```{r}
 
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
