@@ -150,15 +150,74 @@ ggplot(data = abalone_data_2) +
   geom_point(mapping = aes(x = Rings, y = LongestShell, color = Type))
 ```
 
-```
+
 
 ### Darters
 
+# Import darters data.
+
 ```{r}
-darters_data <- read_fwf(here("data", "darter.txt"), fwf_widths(c(3, 11, 1, 1, 1, 3, 4, 4, 4, 3, 3, 2, 2)), comment = '#')
-named_darter <- darters_data %>% 
-  rename(ID = X1, Species = X2, Riffle = X3, Age = X4, Sex = X5, Length = X6, Depth = X7, Velocity = X8, Temperature = X9, Major_Sub = X10, Minor_Sub = X11, Major_Type = X12, Minor_Type = X13)
+darter_data <- read_fwf(file.path(file_path, "darter.txt"), fwf_widths(c(3, 11, 1, 1, 1, 3, 4, 4, 4, 3, 3, 2, 2)), comment = "#")
 ```
+# Set and name columns. Set orders. 
+
+```{r}
+colnames(darter_data) <- c("Specimen", "Species", "Riffle", "Age", "Sex", "Length", "Depth", "Velocity", "Temp", "MajSub Proportion", "MinSub Proportion", "Major Type", "Minor Type")
+darter_data$Riffle <- factor(darter_data$Riffle,levels=c("1", "2"))
+darter_data$"Major Type" <- factor(darter_data$"Major Type",levels=c("s","fg", "sg", "lg", "c"), order = TRUE)
+```
+
+# Filter rows, remove and rename columns, and arrange data. 
+
+```{r}
+darter_data_2 <- darter_data %>% filter(Species != "zonale" & Species != "tetrazonum") %>% 
+  select(!"MinSub Proportion" & ! "Minor Type") %>% 
+  rename("Major_substrate" = "MajSub Proportion", "Major_type" = "Major Type") %>% 
+  arrange("Specimen")
+```
+
+# Plot 1: Plot length as a function of depth and map species to color and shape. 
+
+```{r}
+ggplot(data = darter_data_2,mapping = aes(x = Length, y = Depth, color = Species, shape = Species)) +
+  geom_point() +
+  facet_wrap(~Riffle, ncol = 2)
+```
+
+In riffle 1 there are darters that are more deeper than in riffle 2. 
+
+
+# Plot 2: Make a boxplot of length for each of the three species. 
+
+```{r}
+ggplot(data = darter_data_2,mapping = aes(x = Length, y = Species, color = Species)) +
+  geom_boxplot() +
+  facet_wrap(~Riffle, ncol = 2)
+```
+Riffle 1 shows one outlier. Riffle 2 has more than riffle 1. 
+
+# Plot 3: Make a boxplot of length
+
+```{r}
+ggplot(data = darter_data_2, mapping = aes(x = Length, y = Major_type, color = Species))+
+  geom_boxplot() +
+  facet_grid(Species ~ Riffle)
+```
+
+# Switching the order of the argument
+
+```{r}
+ggplot(data = darter_data_2, mapping = aes(x = Length, y = Major_type, color = Species))+
+  geom_boxplot() +
+  facet_grid(Riffle ~ Species)
+```
+
+
+The argument order of the first graph (species~ riffle) allows the data to be less compressed and interpreted more easily. 
+
+
+
+
 
 
 
