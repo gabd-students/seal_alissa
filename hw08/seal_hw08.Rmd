@@ -300,7 +300,7 @@ popular_dests <- flights %>%
 popular_dests
 ```
 
-## Standardise to compute per group metrics
+## Standardise to compute per group metrics.
 
 ```{r}
 popular_dests %>% 
