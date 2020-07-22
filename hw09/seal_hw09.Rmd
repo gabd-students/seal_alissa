@@ -49,6 +49,49 @@ wrangled_darters_data <- mutate(darters_data_filtered, total_substrate=majsub+mi
 
 ### Summarize the mean length, depth, and velcoity. Group by species and riffle. 
 ```{r}
-sum_wrang_darters_data <- group_by(wrangled_darters_data, species, riffle)
+
+spec_riffle_sep_wrang_darters_data <- group_by(wrangled_darters_data, species, riffle)
+summary_wrangled_data <- summarize(spec_riffle_sep_wrang_darters_data, length=mean(length), depth=mean(depth), velocity=mean(velocity))
+```
+
+### Use kable to make a table.
+
+```{r}
+kable(summary_wrangled_data)
+```
+
+### Plot 1: Summarized darters data
+
+```{r}
+ggplot(data = summary_wrangled_data) + 
+  stat_summary(
+    mapping = aes(x = species, y = length),
+    fun.ymin = min,
+    fun.ymax = max,
+    fun.y = median
+  )
+```
+### Add geom_point() to add mean length
+
+```{r}
+ggplot(data = summary_wrangled_data) + 
+stat_summary(
+    mapping = aes(x = species, y = length),
+    fun.ymin = min,
+    fun.ymax = max,
+    fun.y = median
+  ) +
+  geom_point(mapping = (aes(x= species, y= length) shape=15)
+```
+
+```{r}
+ggplot(data = summary_wrangled_data) +
+  geom_point(mapping = aes(x=species, y=length), shape=15)
+stat_summary(
+    mapping = aes(x = species, y = length),
+    fun.ymin = min,
+    fun.ymax = max,
+    fun.y = median
+  )
 ```
 
