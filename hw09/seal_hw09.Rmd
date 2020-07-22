@@ -1,0 +1,54 @@
+---
+title: "HW09: Wrangling II"
+author: "Alissa Seal"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+library(here)
+```
+
+```{r}
+library(knitr)
+```
+
+```{r}
+library(smatr)
+```
+
+### Source my_functions
+```{r}
+source(here("scripts","my_functions.R"))
+```
+
+### Import darters.csv and remove species tetrazonum and zonale
+```{r}
+darters_data <- read_csv(here("Data", "darters.csv"))
+darters_data_filtered <- darters_data %>%
+  filter(species=="blennioides"|species=="caeruleum"|species== "spectabile")
+```
+
+### Sum majsub and minsub to form new column. Change riffle values. Change length units. Change sex values.
+```{r}
+wrangled_darters_data <- mutate(darters_data_filtered, total_substrate=majsub+minsub) %>%
+  mutate(riffle=ifelse(riffle==1,
+                       "Riffle 1",
+                       "Riffle 2")) %>%
+  mutate(length=length*10) %>%
+  mutate(sex=ifelse(sex=="f",
+                    "Female",
+                    "Male"))
+```
+
+### Summarize the mean length, depth, and velcoity. Group by species and riffle. 
+```{r}
+sum_wrang_darters_data <- group_by(wrangled_darters_data, species, riffle)
+```
+
