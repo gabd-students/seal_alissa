@@ -204,9 +204,7 @@ b <- slope['slope']
 feathers_data_2_w_SMI <- mutate(feathers_data_2,new_smi = scaled_mass(mass,tarsus,b))
 ```
 
-```{r}
-feathers_data_2_w_SMI
-```
+
 
 
 
