@@ -204,15 +204,61 @@ b <- slope['slope']
 feathers_data_2_w_SMI <- mutate(feathers_data_2,new_smi = scaled_mass(mass,tarsus,b))
 ```
 
+## Compare new columns
+
+```{r}
+select(feathers_data_2_w_SMI, "smi", "new_smi")
+```
+
+### Summarize the basal and stress cort data
+
+## Group by site 
+
+```{r}
+site_sorted_feathers_data <- group_by(feathers_data_2_w_SMI,site)
+```
+
+## Calculate the mean and standard error of the mean 
+
+```{r}
+summarized_feathers_data <- summarise(site_sorted_feathers_data, basal_mean=mean(basal_cort, na.rm = TRUE), stress_mean=mean(stress_cort, na.rm = TRUE),std_err_basal=std_err(basal_cort, na.rm = TRUE), std_err_cort=std_err(stress_cort, na.rm = TRUE))
+```
+
+### Graph Data
+
+## Feathers Plot 1
+
+```{r}
+ggplot(data= site_sorted_feathers_data)+
+  geom_boxplot(mapping = aes(x =site, y =new_smi))
+```
+
+## The individuals of the niort site have much wider range of smi values as compared to the other sites.
+
+## Feathers Plot 2
+
+```{r}
+ggplot(data=summarized_feathers_data)+
+  geom_point(mapping=aes(x=site,y=basal_mean), size=3, color="maroon")+
+  geom_errorbar(aes(x=site, ymin=std_err_basal-1,ymax=std_err_basal+1),width=.3)
+```
+
+
+## The assignment wanted us to plot the basal cortico concetration for each site, I hope this only meant the mean value and not all the collected values, because that's what we did... 
+
+### Plots 3 Feathers Data
+
+```{r}
+ggplot(data = summarized_feathers_data)+
+  geom_point(mapping = aes(x=site,y=stress_mean))+
+  geom_linerange(mapping = aes(x=site, ymin=std_err_cort-1,ymax=std_err_cort+1))
+```
+
+### I am starting to doubt my functions were written correctly... why is the standard error of the mean so far from the mean vaules?
 
 
 
-
-
-
-
-
-
+### I completed the graduate requirements on plot 2 of the feathers data.  However, I could not figure out how to get the line to pass behind the dots.  I tried using the aesthetics linetype and alpha, but these only broke the line of diminished the line color. 
 
 
 
