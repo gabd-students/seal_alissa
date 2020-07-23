@@ -51,7 +51,7 @@ wrangled_darters_data <- mutate(darters_data_filtered, total_substrate=majsub+mi
 ```{r}
 
 spec_riffle_sep_wrang_darters_data <- group_by(wrangled_darters_data, species, riffle)
-summary_wrangled_data <- summarize(spec_riffle_sep_wrang_darters_data, length=mean(length), depth=mean(depth), velocity=mean(velocity))
+summary_wrangled_data <- summarize(spec_riffle_sep_wrang_darters_data, length=mean(length, na.rm = TRUE), depth=mean(depth, na.rm = TRUE), velocity=mean(velocity, na.rm = TRUE))
 ```
 
 ### Use kable to make a table.
@@ -63,7 +63,7 @@ kable(summary_wrangled_data)
 ### Plot 1: Summarized darters data
 
 ```{r}
-ggplot(data = summary_wrangled_data) + 
+ggplot(data = wrangled_darters_data) + 
   stat_summary(
     mapping = aes(x = species, y = length),
     fun.ymin = min,
@@ -74,24 +74,145 @@ ggplot(data = summary_wrangled_data) +
 ### Add geom_point() to add mean length
 
 ```{r}
-ggplot(data = summary_wrangled_data) + 
-stat_summary(
-    mapping = aes(x = species, y = length),
-    fun.ymin = min,
-    fun.ymax = max,
-    fun.y = median
-  ) +
-  geom_point(mapping = (aes(x= species, y= length) shape=15)
-```
-
-```{r}
 ggplot(data = summary_wrangled_data) +
   geom_point(mapping = aes(x=species, y=length), shape=15)
 stat_summary(
-    mapping = aes(x = species, y = length),
     fun.ymin = min,
     fun.ymax = max,
     fun.y = median
   )
 ```
+
+### Rotate axis, separate in to 2 riffle, add labs()
+
+```{r}
+ggplot(data = summary_wrangled_data) +
+  geom_point(mapping = aes(x=species, y=length), shape=15)+
+  facet_wrap(~riffle) +
+  coord_flip() +
+  labs(y = "length", x = NULL)
+stat_summary(
+    fun.ymin = min,
+    fun.ymax = max,
+    fun.y = median
+  )
+```
+
+# Riffle 2 contains the longest average blennioides, but among the other species, the individuals in riffle one are longer
+
+### Darters Plot 2
+
+## Added gray scale and first stat_summary()
+
+```{r}
+ggplot(data = summary_wrangled_data) +
+  geom_point(mapping = aes(x=species, y=length), color= "gray65")+
+  facet_wrap(~riffle) +
+  coord_flip() +
+  labs(y = "length", x = NULL)
+stat_summary(
+    fun.y = median,
+    geom = "point",
+    size = 2.2
+  )
+```
+
+
+
+### Darters Plot 2
+
+## Add second stat_summary() function to the graph
+
+```{r}
+ggplot(data = summary_wrangled_data, aes(x= species, y = length)) +
+  geom_point(color= "gray65")+
+stat_summary(
+    fun.y = median,
+    geom = "point",
+    size = 2.2
+  ) +
+stat_summary(fun.y = mean, geom = "point", size = 3,color = "maroon")+
+  facet_wrap(~riffle) +
+  coord_flip() +
+  labs(y = "length", x = NULL)
+```
+
+```{r}
+library(tidyverse)
+library(smatr)
+```
+
+### Stress and Coritcosterones In Birds
+
+### Import feathers.csv and change decimal mark
+
+```{r}
+feathers_data <- read_csv(here("Data", "feathers.csv"), locale = locale(decimal_mark = ","))
+```
+## Renaming Feather Columns
+
+```{r}
+feathers_data_2 <- feathers_data %>%
+  rename("capture_date" = "Capture Date", "day" = "Date",  "site" = "Site", "urban_score" = "Urba Score", "cortF" = "CortF ng/mg", "cortB" = "CortF ng/mm", "sex" = "Sex", "smi" =  "SMI", "tarsus" = "Tarsus", "mass" = "Mass", "basal_cort" = "Bas_Cort", "stress_cort" = "Stress_Cort")
+```
+
+## View feathers_data_2
+
+```{r}
+feathers_data_2
+```
+
+## Calculate mean tarsus length
+
+```{r}
+mean_tarsus <- mean(feathers_data_2$tarsus, na.rm = TRUE)
+```
+
+## Use mutate() to form new columns
+```{r}
+mutated_feathers_data_2 <- mutate(feathers_data_2, log_mass=log(mass), log_tarsus= log(tarsus))
+```
+
+## Use sma() function to calculate the standardized major axis regression
+
+
+```{r}
+major_axis <- sma(log_mass ~ log_tarsus, data = mutated_feathers_data_2)
+```
+
+## Apply summary function
+```{r}
+summary(major_axis)
+```
+
+## Apply coef() function
+
+```{r}
+coef(major_axis)
+```
+
+## Store slope value in b
+
+```{r}
+slope <- coef(major_axis)
+b <- slope['slope']
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
