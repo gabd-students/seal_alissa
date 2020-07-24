@@ -56,6 +56,7 @@ crabs_data %>%
   ggplot(aes(x = box_group, 
              y = Depth)) +
   geom_boxplot(width = 0.25)
+
 ```
 
 ## 2 outliers found in depth data
@@ -66,6 +67,7 @@ crabs_data %>%
   ggplot(aes(x = box_group, 
              y = Flow)) +
   geom_boxplot(width = 0.25)
+
 ```
 
 ## Multiple possible outliers
@@ -76,6 +78,7 @@ crabs_data %>%
   ggplot(aes(x = box_group, 
              y = pH)) +
   geom_boxplot(width = 0.25)
+
 ```
 
 ## 2 possible outliers found in pH data
@@ -87,7 +90,8 @@ crabs_data %>%
              y = TDS)) +
   geom_boxplot(width = 0.25)+
 labs(x = NULL,
-       y = "Total Dissolved Solids")
+     y = "Total Dissolved Solids")
+
 ```
 
 ## No outliers
@@ -100,6 +104,7 @@ crabs_data %>%
   geom_boxplot(width = 0.25)+
   labs(x = NULL,
        y = "Conductivity")
+
 ```
 ## No outliers
 
@@ -110,7 +115,8 @@ crabs_data %>%
              y = N)) +
   geom_boxplot(width = 0.25)+
    labs(x = NULL,
-       y = "Nitrogen")
+        y = "Nitrogen")
+
 ```
 
 ## Two outliers
@@ -122,7 +128,8 @@ crabs_data %>%
              y = Ni)) +
   geom_boxplot(width = 0.25)+
    labs(x = NULL,
-       y = "Nitrate")
+        y = "Nitrate")
+
 ```
 
 ## No outliers
@@ -134,7 +141,8 @@ crabs_data %>%
              y = Nt)) +
   geom_boxplot(width = 0.25)+
    labs(x = NULL,
-       y = "Nitrite Concentrations")
+        y = "Nitrite Concentrations")
+
 ```
 ## Multiple possible outliers
 
@@ -145,7 +153,8 @@ crabs_data %>%
              y = Phos)) +
   geom_boxplot(width = 0.25)+
    labs(x = NULL,
-       y = "Phosphate")
+        y = "Phosphate")
+
 ```
 ## Two outliers
 
@@ -156,7 +165,8 @@ crabs_data %>%
              y = Mg)) +
   geom_boxplot(width = 0.25)+
    labs(x = NULL,
-       y = "Magnesium")
+        y = "Magnesium")
+
 ```
 ## No outliers
 
@@ -167,46 +177,186 @@ crabs_data %>%
              y = Ca)) +
   geom_boxplot(width = 0.25)+
    labs(x = NULL,
-       y = "Calcium concentrations")
+        y = "Calcium concentrations")
+
 ```
 ## No outliers
 
-## Overall interpretation is that the variables which most likely contain outliers are width, depth, pH, phosphate, and nitrogen. The variables flow and nitrate contained multiple outlier points
+## Overall interpretation is that the variables which most likely contain outliers are width, depth, pH, phosphate, and nitrogen. The variables flow and nitrate contained multiple possible outlier points. The variables TDS, Cond, Ni, Mg, and Ca contained no possible outliers. The data must be further explored to determine if possible outliers are truly outliers.
+
+### Cleveland Plot #1
+
+```{r}
+clev_width <- crabs_data %>% 
+  ggplot(aes(x = Width,
+             y = row_order)) +
+  geom_point() +
+  labs(x = "Width",
+       y = "Order of the data")
+
+```
+
+```{r}
+clev_width
+```
+
+## Most likely what was reported as a possible outlier was just an upper value limit.
+
+
+### Cleveland Plot #2
+```{r}
+clev_depth <- crabs_data %>% 
+  ggplot(aes(x = Depth,
+             y = row_order)) +
+  geom_point() +
+  labs(x = "Depth",
+       y = "Order of the data")
+
+```
+
+```{r}
+clev_depth
+```
+
+## Depth of 5 is most likely an outlier
+
+### Cleveland Plot #3
+
+```{r}
+clev_pH <- crabs_data %>% 
+  ggplot(aes(x = pH,
+             y = row_order)) +
+  geom_point() +
+  labs(x = "pH",
+       y = "Order of the data")
+clev_pH
+
+```
+
+## Most likely what was reported as a possible outlier was just an upper value limit.
 
 
 
+### Cleveland Plot #4
+
+```{r}
+clev_Nitrogen <- crabs_data %>% 
+  ggplot(aes(x = N,
+             y = row_order)) +
+  geom_point() +
+  labs(x = "Nitrogen",
+       y = "Order of the data")
+clev_Nitrogen
+
+```
+
+## Most likely what was reported as a possible outlier was just an upper value limit.
+
+### Patchwork of Cleveland Plots
+
+```{r}
+clev_width+clev_depth+clev_pH+clev_Nitrogen
+```
+
+### Constructing Histograms
+## Histogram #1: Width
+```{r}
+h1 <- crabs_data %>%
+  ggplot() +
+  geom_histogram(aes(x = Width),
+                 binwidth = 1.0,
+                 boundary = 0,
+                 closed = "right",
+                 color = "black") +
+  scale_x_continuous(breaks = seq(1, 14, by = 2))
+h1
+
+```
+
+## Histogram #2: Depth
+```{r}
+h2 <- crabs_data %>%
+  ggplot() +
+  geom_histogram(aes(x = Depth),
+                 binwidth = 0.5,
+                 boundary = 0,
+                 closed = "right",
+                 color = "black") +
+  scale_x_continuous(breaks = seq(0, 5, by = 0.5))
+h2
+
+```
+
+## Histogram #3: pH
+```{r}
+h3 <- crabs_data %>%
+  ggplot() +
+  geom_histogram(aes(x = pH),
+                 binwidth = 0.1,
+                 boundary = 0,
+                 closed = "right",
+                 color = "black") +
+  scale_x_continuous(breaks = seq(6, 8, by = 0.25))
+h3
+
+```
+
+### Constructing Density Plots
+
+## Width Density Plot #1
+```{r}
+dens1 <- crabs_data %>%
+  ggplot() +
+  geom_density(aes(x = Width))+
+  scale_x_continuous(breaks = seq(1,  14, by = 2))
+dens1
+
+```
 
 
+## Depth Density Plot #2
+```{r}
+dens2 <- crabs_data %>%
+  ggplot() +
+  geom_density(aes(x = Depth))+
+  scale_x_continuous(breaks = seq(0,  5, by = 0.5))
+dens2
+
+```
+
+## pH Density Plot #3
+```{r}
+dens3 <- crabs_data %>%
+  ggplot() +
+  geom_density(aes(x = pH))+
+  scale_x_continuous(breaks = seq(6,  8, by = 0.25))
+dens3
+
+```
+
+### Patchwork for Histograms and Density Plots #1
+```{r}
+h1+dens1
+```
+
+### Patchwork for Histograms and Density Plots #2
+```{r}
+h2+dens2
+```
+
+### Patchwork for Histograms and Density Plots #3
+```{r}
+h3+dens3
+```
 
 
+### Using ggpairs to investigate a relationship among all variables
 
+```{r}
+crabs_data %>% ggpairs(columns = 1:12)
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+### We made it, but lost as to its interpretation. 
 
 
 
