@@ -29,6 +29,7 @@ library(patchwork)
 
 ```{r}
 sparrows_raw <- read_tsv(here("data", "sparrows.txt"))
+
 ```
 
 ## Check
@@ -42,10 +43,127 @@ sparrows_raw
 sparrows <- sparrows_raw %>% 
   mutate(box_group = "Sparrows",
          row_order = 1:nrow(.))
+
 ```
 
 ## Check
 ```{r}
 view(sparrows)
 ```
+
+### Figure 2: Outliers
+
+## Run Code 
+```{r}
+plot_box<- sparrows %>% 
+  ggplot(aes(x = box_group, y = wingcrd)) +
+  geom_boxplot(width = 0.25) +
+  labs(x = NULL, y = "Wing length (mm)")
+
+```
+## Run Cleveland dot plot
+
+```{r}
+plot_cleveland <- sparrows %>%
+  ggplot(aes(x= wingcrd,y=row_order))+
+  geom_point()+
+  labs(x="Wing length (mm)", y="Order of the date")
+
+```
+
+## Display plots
+```{r}
+plot_box+plot_cleveland
+```
+## Add coord_flip()
+
+```{r}
+plot_box+plot_cleveland+coord_flip()
+```
+
+### Figure 3: Outliers
+
+## culmen plot
+```{r}
+p_culmen <- sparrows %>% 
+  ggplot(aes(y = row_order)) +
+  geom_point(aes(x = culmen)) +
+  theme(axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+
+
+```
+
+## nalospi plot
+```{r}
+p_nalospi <- sparrows %>% 
+  ggplot(aes(y = row_order)) +
+  geom_point(aes(x = nalospi)) +
+  theme(axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+
+
+```
+
+## wt plot
+```{r}
+p_wt <- sparrows %>% 
+  ggplot(aes(y = row_order)) +
+  geom_point(aes(x = wt)) +
+  theme(axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+
+
+```
+
+## wingcrd plot
+```{r}
+p_wingcrd <- sparrows %>% 
+  ggplot(aes(y = row_order)) +
+  geom_point(aes(x = wingcrd)) +
+  theme(axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+
+```
+
+## tarsus plot
+```{r}
+p_tarsus <- sparrows %>% 
+  ggplot(aes(y = row_order)) +
+  geom_point(aes(x = tarsus)) +
+  theme(axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+
+
+```
+
+## head plot
+```{r}
+p_head <- sparrows %>% 
+  ggplot(aes(y = row_order)) +
+  geom_point(aes(x = head)) +
+  theme(axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+
+```
+
+## Six Variable Plot
+```{r}
+p_culmen+p_nalospi+p_wt+p_wingcrd+p_tarsus+p_head
+```
+
+## The variables nalospi, tarsus, and head appear to have outlier data
+
+
+
+
+
+
+
 
