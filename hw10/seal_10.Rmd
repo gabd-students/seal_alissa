@@ -1,0 +1,51 @@
+---
+title: "HW10: Data Visualization I"
+author: "Alissa Seal"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+### Install and load libraries
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+library(here)
+```
+
+```{r}
+library(GGally)
+```
+
+```{r}
+library(patchwork)
+```
+
+### Import Sparrows Data
+
+```{r}
+sparrows_raw <- read_tsv(here("data", "sparrows.txt"))
+```
+
+## Check
+```{r}
+sparrows_raw
+```
+
+### Wrangle Sparrow Data
+
+```{r}
+sparrows <- sparrows_raw %>% 
+  mutate(box_group = "Sparrows",
+         row_order = 1:nrow(.))
+```
+
+## Check
+```{r}
+view(sparrows)
+```
+
