@@ -6,3 +6,217 @@ output: html_notebook
 editor_options: 
   chunk_output_type: inline
 ---
+
+### Load Libraries
+```{r}
+library(tidyverse)
+library(here)
+library(GGally)
+library(patchwork)
+```
+
+### Import Data, Remove Columns, Remove Row, and Create Dummy Variable
+
+```{r}
+crabs_raw <- read.csv(here("Data", "aegla.crabs.csv"))
+```
+
+### View Imported Dataset
+```{r}
+crabs_raw
+```
+
+### Remove columns, remove row, create dummy variable
+```{r}
+crabs_data <- crabs_raw %>%
+  select(Width, Depth, Flow, pH, TDS, Cond, N, Ni, Nt, Phos, Mg, Ca) %>%
+  drop_na() %>%
+  mutate(box_group="Crabs", row_order = 1:nrow(.))
+```
+
+### View Results
+```{r}
+view(crabs_data)
+```
+
+### Exploring width outliers
+```{r}
+crabs_data %>% 
+  ggplot(aes(x = box_group, 
+             y = Width)) +
+  geom_boxplot(width = 0.25)
+
+```
+
+## 1 outlier found in width data
+
+### Exploring depth outliers
+```{r}
+crabs_data %>% 
+  ggplot(aes(x = box_group, 
+             y = Depth)) +
+  geom_boxplot(width = 0.25)
+```
+
+## 2 outliers found in depth data
+
+### Explore flow outliers
+```{r}
+crabs_data %>% 
+  ggplot(aes(x = box_group, 
+             y = Flow)) +
+  geom_boxplot(width = 0.25)
+```
+
+## Multiple possible outliers
+
+### Explore pH outliers
+```{r}
+crabs_data %>% 
+  ggplot(aes(x = box_group, 
+             y = pH)) +
+  geom_boxplot(width = 0.25)
+```
+
+## 2 possible outliers found in pH data
+
+### Explore TDS outliers
+```{r}
+crabs_data %>% 
+  ggplot(aes(x = box_group, 
+             y = TDS)) +
+  geom_boxplot(width = 0.25)+
+labs(x = NULL,
+       y = "Total Dissolved Solids")
+```
+
+## No outliers
+
+### Explore Cond outliers
+```{r}
+crabs_data %>% 
+  ggplot(aes(x = box_group, 
+             y = Cond)) +
+  geom_boxplot(width = 0.25)+
+  labs(x = NULL,
+       y = "Conductivity")
+```
+## No outliers
+
+### Explore N outliers
+```{r}
+crabs_data %>% 
+  ggplot(aes(x = box_group, 
+             y = N)) +
+  geom_boxplot(width = 0.25)+
+   labs(x = NULL,
+       y = "Nitrogen")
+```
+
+## Two outliers
+
+### Explore Ni outliers
+```{r}
+crabs_data %>% 
+  ggplot(aes(x = box_group, 
+             y = Ni)) +
+  geom_boxplot(width = 0.25)+
+   labs(x = NULL,
+       y = "Nitrate")
+```
+
+## No outliers
+
+### Explore Nt outliers
+```{r}
+crabs_data %>% 
+  ggplot(aes(x = box_group, 
+             y = Nt)) +
+  geom_boxplot(width = 0.25)+
+   labs(x = NULL,
+       y = "Nitrite Concentrations")
+```
+## Multiple possible outliers
+
+### Explore Phos outliers
+```{r}
+crabs_data %>% 
+  ggplot(aes(x = box_group, 
+             y = Phos)) +
+  geom_boxplot(width = 0.25)+
+   labs(x = NULL,
+       y = "Phosphate")
+```
+## Two outliers
+
+### Explore Mg outliers
+```{r}
+crabs_data %>% 
+  ggplot(aes(x = box_group, 
+             y = Mg)) +
+  geom_boxplot(width = 0.25)+
+   labs(x = NULL,
+       y = "Magnesium")
+```
+## No outliers
+
+### Explore Ca outliers
+```{r}
+crabs_data %>% 
+  ggplot(aes(x = box_group, 
+             y = Ca)) +
+  geom_boxplot(width = 0.25)+
+   labs(x = NULL,
+       y = "Calcium concentrations")
+```
+## No outliers
+
+## Overall interpretation is that the variables which most likely contain outliers are width, depth, pH, phosphate, and nitrogen. The variables flow and nitrate contained multiple outlier points
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+               
+               
+               
+               
+               
+               
+               
+               
+               
