@@ -1,0 +1,8 @@
+---
+title: "HW11: Data Visualization I(cont"
+author: "Alissa Seal"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
