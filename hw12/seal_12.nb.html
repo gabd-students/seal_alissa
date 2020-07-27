@@ -1880,23 +1880,24 @@ mclintock1</code></pre>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="mlk" class="section level2">
-<h2>MLK</h2>
+<div id="mlk_birth" class="section level2">
+<h2>MLK_birth</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWxrX2JpcnRoIDwtIFwiMS8xNS8yOVwiXG55ZWFyKG1sa19iaXJ0aCkgPC0gMTkyOVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWxrX2JpcnRoIDwtIFwiMS8xNS8yOVwiXG5tbGtfYmlydGgxIDwtIG1keShtbGtfYmlydGgpXG55ZWFyKG1sa19iaXJ0aDEpIDwtIDE5Mjlcbm1sa19iaXJ0aDFcbmBgYCJ9 -->
 <pre class="r"><code>mlk_birth &lt;- &quot;1/15/29&quot;
-year(mlk_birth) &lt;- 1929</code></pre>
+mlk_birth1 &lt;- mdy(mlk_birth)
+year(mlk_birth1) &lt;- 1929
+mlk_birth1</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gYXMuUE9TSVhsdC5jaGFyYWN0ZXIoeCwgdHogPSB0eih4KSkgOiBcbiAgY2hhcmFjdGVyIHN0cmluZyBpcyBub3QgaW4gYSBzdGFuZGFyZCB1bmFtYmlndW91cyBmb3JtYXRcbiJ9 -->
-<pre><code>Error in as.POSIXlt.character(x, tz = tz(x)) : 
-  character string is not in a standard unambiguous format</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiMTkyOS0wMS0xNVwiXG4ifQ== -->
+<pre><code>[1] &quot;1929-01-15&quot;</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="mlk-1" class="section level2">
-<h2>MLK</h2>
+<div id="mlk_dream" class="section level2">
+<h2>MLK_dream</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWxrX2RyZWFtIDwtIFwiMTk2MyBBdWd1c3QgMjhcIlxubWxrX2RyZWFtMSA8LSB5bWQobWxrX2RyZWFtKVxubWxrX2RyZWFtMVxuYGBgIn0= -->
@@ -1904,18 +1905,19 @@ year(mlk_birth) &lt;- 1929</code></pre>
 mlk_dream1 &lt;- ymd(mlk_dream)
 mlk_dream1</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiMTk2My0wOC0yOFwiXG4ifQ== -->
-<pre><code>[1] &quot;1963-08-28&quot;</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <div id="question-3" class="section level3">
 <h3>Question 3</h3>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiSFcxMjogRGF0ZXMiCmF1dGhvcjogIkFsaXNzYSBTZWFsIgpkYXRlOiAiYHIgZm9ybWF0KFN5cy50aW1lKCksICclZCAlQiAlWScpYCIKb3V0cHV0OiBodG1sX25vdGVib29rCmVkaXRvcl9vcHRpb25zOiAKICBjaHVua19vdXRwdXRfdHlwZTogaW5saW5lCi0tLQoKIyMjIExvYWQgTGlicmFyaWVzCmBgYHtyfQpsaWJyYXJ5KHRpZHl2ZXJzZSkKbGlicmFyeShoZXJlKQpsaWJyYXJ5KGx1YnJpZGF0ZSkKYGBgCgojIyMgUGFydCAxOiBQbGF5IGRhdGUKCiMjIExvYWQgcGVyc29uYWwgYmlydGhfZGF0ZSBjaHVuawpgYGB7cn0Kc2VhbCA8LSAiTm92ZW1iZXIgMiwgMTk4NSIKYGBgCgojIyMgUXVlc3Rpb24gMQoKIyNFbGl6YWJldGggQW5kZXJzb24KYGBge3J9CmFuZGVyc29uIDwtICI5IEp1bmUgMTgzNiIKYW5kZXJzb24xIDwtIGRteShhbmRlcnNvbikKYW5kZXJzb24xCmBgYAoKIyNNYXJ5IEFubmluZwpgYGB7cn0KYW5uaW5nPC0gIjE3OTkvMDUvMjEiCmFubmluZzE8LSB5bWQoYW5uaW5nKQphbm5pbmcxCmBgYAoKIyNBbGljZSBCYWxsCmBgYHtyfQpiYWxsPC0gIkp1bHkgMjQsIDE4OTIiCmJhbGwxIDwtbWR5IChiYWxsKQpiYWxsMQpgYGAKCiMjIFN5bHZpYSBFYXJsZQpgYGB7cn0KZWFybGUgPC0gIkF1Z3VzdCwgMzAgKDE5MzUpIgplYXJsZTEgPC1tZHkoZWFybGUpCmVhcmxlMQpgYGAKCiMjIFJvc2FsaW5kIEZyYW5rbGluCmBgYHtyfQpmcmFua2xpbjwtICIyNXRoIG9mIEp1bHksIDE5MjAiCmZyYW5rbGluMSA8LSBkbXkoZnJhbmtsaW4pCmZyYW5rbGluMQpgYGAKCiMjIEVzdGVyIExlZGVyYmVyZwpgYGB7cn0KbGVkZXJiZXJnIDwtICJEZWNlbWJlciAxOCwgMTkyMiIKbGVkZXJiZXJnMSA8LSBtZHkobGVkZXJiZXJnKQpsZWRlcmJlcmcxCmBgYAoKIyMgQmFyYmFyYSBNY0NsaW50b2NrCmBgYHtyfQptY2xpbnRvY2sgPC0gIjE2MDYxOTAyIgptY2xpbnRvY2sxIDwtIGRteShtY2xpbnRvY2spCm1jbGludG9jazEKYGBgCgojIyBNTEsKYGBge3J9Cm1sa19iaXJ0aCA8LSAiMS8xNS8yOSIKeWVhcihtbGtfYmlydGgpIDwtIDE5MjkKbWxrX2JpcnRoMSA8LSBtZHkobWxrX2JpcnRoKQptbGtfYmlydGgxCmBgYAoKIyMgTUxLCmBgYHtyfQptbGtfZHJlYW0gPC0gIjE5NjMgQXVndXN0IDI4IgptbGtfZHJlYW0xIDwtIHltZChtbGtfZHJlYW0pCm1sa19kcmVhbTEKYGBgCgojIyMgUXVlc3Rpb24gMwoKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiSFcxMjogRGF0ZXMiCmF1dGhvcjogIkFsaXNzYSBTZWFsIgpkYXRlOiAiYHIgZm9ybWF0KFN5cy50aW1lKCksICclZCAlQiAlWScpYCIKb3V0cHV0OiBodG1sX25vdGVib29rCmVkaXRvcl9vcHRpb25zOiAKICBjaHVua19vdXRwdXRfdHlwZTogaW5saW5lCi0tLQoKIyMjIExvYWQgTGlicmFyaWVzCmBgYHtyfQpsaWJyYXJ5KHRpZHl2ZXJzZSkKbGlicmFyeShoZXJlKQpsaWJyYXJ5KGx1YnJpZGF0ZSkKYGBgCgojIyMgUGFydCAxOiBQbGF5IGRhdGUKCiMjIExvYWQgcGVyc29uYWwgYmlydGhfZGF0ZSBjaHVuawpgYGB7cn0Kc2VhbCA8LSAiTm92ZW1iZXIgMiwgMTk4NSIKYGBgCgojIyMgUXVlc3Rpb24gMQoKIyNFbGl6YWJldGggQW5kZXJzb24KYGBge3J9CmFuZGVyc29uIDwtICI5IEp1bmUgMTgzNiIKYW5kZXJzb24xIDwtIGRteShhbmRlcnNvbikKYW5kZXJzb24xCmBgYAoKIyNNYXJ5IEFubmluZwpgYGB7cn0KYW5uaW5nPC0gIjE3OTkvMDUvMjEiCmFubmluZzE8LSB5bWQoYW5uaW5nKQphbm5pbmcxCmBgYAoKIyNBbGljZSBCYWxsCmBgYHtyfQpiYWxsPC0gIkp1bHkgMjQsIDE4OTIiCmJhbGwxIDwtbWR5IChiYWxsKQpiYWxsMQpgYGAKCiMjIFN5bHZpYSBFYXJsZQpgYGB7cn0KZWFybGUgPC0gIkF1Z3VzdCwgMzAgKDE5MzUpIgplYXJsZTEgPC1tZHkoZWFybGUpCmVhcmxlMQpgYGAKCiMjIFJvc2FsaW5kIEZyYW5rbGluCmBgYHtyfQpmcmFua2xpbjwtICIyNXRoIG9mIEp1bHksIDE5MjAiCmZyYW5rbGluMSA8LSBkbXkoZnJhbmtsaW4pCmZyYW5rbGluMQpgYGAKCiMjIEVzdGVyIExlZGVyYmVyZwpgYGB7cn0KbGVkZXJiZXJnIDwtICJEZWNlbWJlciAxOCwgMTkyMiIKbGVkZXJiZXJnMSA8LSBtZHkobGVkZXJiZXJnKQpsZWRlcmJlcmcxCmBgYAoKIyMgQmFyYmFyYSBNY0NsaW50b2NrCmBgYHtyfQptY2xpbnRvY2sgPC0gIjE2MDYxOTAyIgptY2xpbnRvY2sxIDwtIGRteShtY2xpbnRvY2spCm1jbGludG9jazEKYGBgCgojIyBNTEtfYmlydGgKCmBgYHtyfQptbGtfYmlydGggPC0gIjEvMTUvMjkiCm1sa19iaXJ0aDEgPC0gbWR5KG1sa19iaXJ0aCkKeWVhcihtbGtfYmlydGgxKSA8LSAxOTI5Cm1sa19iaXJ0aDEKYGBgCgojIyBNTEtfZHJlYW0KYGBge3J9Cm1sa19kcmVhbSA8LSAiMTk2MyBBdWd1c3QgMjgiCm1sa19kcmVhbTEgPC0geW1kKG1sa19kcmVhbSkKbWxrX2RyZWFtMQpgYGAKCiMjIyBRdWVzdGlvbiAzCgpgYGB7cn0KCmBgYAoKCg==</div>
 
 
 

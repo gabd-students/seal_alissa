@@ -72,15 +72,16 @@ mclintock1 <- dmy(mclintock)
 mclintock1
 ```
 
-## MLK
+## MLK_birth
+
 ```{r}
 mlk_birth <- "1/15/29"
-year(mlk_birth) <- 1929
 mlk_birth1 <- mdy(mlk_birth)
+year(mlk_birth1) <- 1929
 mlk_birth1
 ```
 
-## MLK
+## MLK_dream
 ```{r}
 mlk_dream <- "1963 August 28"
 mlk_dream1 <- ymd(mlk_dream)
@@ -88,5 +89,9 @@ mlk_dream1
 ```
 
 ### Question 3
+
+```{r}
+
+```
 
 
