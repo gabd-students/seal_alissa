@@ -1,0 +1,89 @@
+---
+title: "HW12: Dates"
+author: "Alissa Seal"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+### Load Libraries
+```{r}
+library(tidyverse)
+library(here)
+library(lubridate)
+```
+
+### Part 1: Play date
+
+## Load personal birth_date chunk
+```{r}
+seal <- "November 2, 1985"
+```
+
+### Question 1
+
+##Elizabeth Anderson
+```{r}
+anderson <- "9 June 1836"
+anderson1 <- dmy(anderson)
+anderson1
+```
+
+##Mary Anning
+```{r}
+anning<- "1799/05/21"
+anning1<- ymd(anning)
+anning1
+```
+
+##Alice Ball
+```{r}
+ball<- "July 24, 1892"
+ball1 <-mdy (ball)
+ball1
+```
+
+## Sylvia Earle
+```{r}
+earle <- "August, 30 (1935)"
+earle1 <-mdy(earle)
+earle1
+```
+
+## Rosalind Franklin
+```{r}
+franklin<- "25th of July, 1920"
+franklin1 <- dmy(franklin)
+franklin1
+```
+
+## Ester Lederberg
+```{r}
+lederberg <- "December 18, 1922"
+lederberg1 <- mdy(lederberg)
+lederberg1
+```
+
+## Barbara McClintock
+```{r}
+mclintock <- "16061902"
+mclintock1 <- dmy(mclintock)
+mclintock1
+```
+
+## MLK
+```{r}
+mlk_birth <- "1/15/29"
+mdy(mlk_birth)
+```
+
+## MLK
+```{r}
+mlk_dream <- "1963 August 28"
+ymd(mlk_dream)
+```
+
+### Question 3
+
+
