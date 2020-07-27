@@ -19,6 +19,8 @@ library(lubridate)
 ## Load personal birth_date chunk
 ```{r}
 seal <- "November 2, 1985"
+seal1 <- mdy(seal)
+seal1
 ```
 
 ### Question 1
@@ -67,9 +69,9 @@ lederberg1
 
 ## Barbara McClintock
 ```{r}
-mclintock <- "16061902"
-mclintock1 <- dmy(mclintock)
-mclintock1
+mcclintock <- "16061902"
+mcclintock1 <- dmy(mcclintock)
+mcclintock1
 ```
 
 ## MLK_birth
@@ -89,9 +91,109 @@ mlk_dream1
 ```
 
 ### Question 3
+## Weekday of birth
+```{r}
+weekdays(seal1)
+```
+
+### Question 4
+## Weekday of birthday this year
+```{r}
+update(seal1, year=2020, month=11, day=02) %>%
+  weekdays()
+```
+
+### Question 5
+## Weekday of birthday year 2525
+```{r}
+update(seal1, year=2525, month=11, day=02) %>%
+  weekdays(abbr=TRUE)
+```
+
+## Set 2525 Birthday
+```{r}
+birthday <- "November 02, 2525"
+birthday2525 <- mdy(birthday)
+```
+
+## How Old In 2525
+```{r}
+(birthday2525-seal1) / 365
+```
+## The return code proveds an answer in days, but dividing by 365 converts the answer to years. I would be 540 years old in 2525. 
+
+
+### Question 6
+
+## Number of days between the birth of Dr. Anderson and Ball
 
 ```{r}
+ball1-anderson1
+```
+
+### Question 7
+
+## Duration between Martin Luther King Jr's birthday and his speech
+```{r}
+mlk_dream1-mlk_birth1
+```
+
+### Create birth dates vector
+
+```{r}
+birth_dates <- c(anderson1, anning1, ball1, earle1, franklin1, lederberg1, mcclintock1, mlk_birth1, seal1)
+```
+
+### check for leap years
+```{r}
+birth_dates[leap_year(birth_dates)] %>%
+  year()
+```
+
+### Days between my birthday and the others in the birth_dates dataset
+
+```{r}
+seal1-birth_dates
+```
+
+### Part 2: Wrangling and plotting with dates
+
+## Import lake_ice Data
+```{r}
+lake_ice_raw <- read.csv(here("data", "lake_ice.csv"), na.strings="-999") %>%
+  na.omit()
+lake_ice_raw
+```
+
+## Filter out Lake Mendota
+```{r}
+lake_mendota_data <- filter(lake_ice_raw, lakename== "LAKE MENDOTA") 
+```
+
+## Select six columns, make new date columns, create new duration column with values as numerics
+```{r}
+lake_mendota_data_2 <- select(lake_mendota_data, iceon_year, iceon_month, iceon_day, iceoff_year, iceoff_month, iceoff_day) %>%
+  mutate(ice_on = make_date(iceon_year, iceon_month, iceon_day) ,ice_off = make_date(iceoff_year, iceoff_month, iceoff_day), duration_days = as.numeric(ice_off-ice_on))
+
 
 ```
+
+
+## Create a line graph of ice data
+```{r}
+ggplot(data = lake_mendota_data_2)+
+  geom_line(mapping = aes(x=iceoff_year, y=duration_days))+xlab("Year")+ylab("Duration of Ice/Days")
+
+
+```
+## na values were removed from data when imported
+
+
+
+
+
+
+
+
 
 
