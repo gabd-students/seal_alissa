@@ -75,13 +75,16 @@ mclintock1
 ## MLK
 ```{r}
 mlk_birth <- "1/15/29"
-mdy(mlk_birth)
+year(mlk_birth) <- 1929
+mlk_birth1 <- mdy(mlk_birth)
+mlk_birth1
 ```
 
 ## MLK
 ```{r}
 mlk_dream <- "1963 August 28"
-ymd(mlk_dream)
+mlk_dream1 <- ymd(mlk_dream)
+mlk_dream1
 ```
 
 ### Question 3
