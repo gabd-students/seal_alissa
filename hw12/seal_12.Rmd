@@ -220,7 +220,43 @@ library(lubridate)
 #### Make a new date column add date vector to day column
 ```{r}
 mutated_soil_co2<-soil_co2_data_2 %>%
- mutate(Date= make_date(days(Day)+date1))
+ mutate(Date=(Day+date1))
 mutated_soil_co2
 ```
+
+### Create year and month column
+```{r}
+mutated_soil_co2_2 <- mutated_soil_co2 %>%
+  mutate(Year=year(Date), Month=month(Date))
+mutated_soil_co2_2
+```
+
+### Group data by year and month
+```{r}
+soil_co2_ym <- group_by(mutated_soil_co2_2,Year, Month)
+soil_co2_ym
+```
+
+### Summarize CO2 mean
+```{r}
+summarized_soil_co2_ym <- summarise(soil_co2_ym, co2_mean=mean(Corr_CO2, na.rm = TRUE), std_err_co2=std_err (Corr_CO2, na.rm = TRUE))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
