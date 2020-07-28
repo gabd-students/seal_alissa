@@ -188,12 +188,28 @@ ggplot(data = lake_mendota_data_2)+
 ```
 ## na values were removed from data when imported
 
+### Soil Carbon Dioxide
 
+## Import soil_co2 Dataset
 
+```{r}
+soil_co2_data <- read_tsv(here("data", "soil_co2.txt"))
+```
+```{r}
+soil_co2_data
+```
 
+## POSIXct- compatiable date variable for 1/1/06
 
+```{r}
+date <- "01, January 2006"
+date1 <- dmy(date)
+date1
+```
 
+```{r}
 
+```
 
 
 
