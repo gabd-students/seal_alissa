@@ -207,9 +207,20 @@ date1 <- dmy(date)
 date1
 ```
 
+## Rename columns
 ```{r}
-
+soil_co2_data_2 <- soil_co2_data %>%
+  rename("Day" = "DayN[]", "Date_code" = "Datecode[]",  "Min" = "Min[]", "Veg" = "Veg[]", "Plot" = "Plot[]", "Group" = "Group[]", "Corr_CO2" = "CorrCO2[]", "Soil_T" =  "SoilT[]")
 ```
 
-
+### load lubridate
+```{r}
+library(lubridate)
+```
+#### Make a new date column add date vector to day column
+```{r}
+mutated_soil_co2<-soil_co2_data_2 %>%
+ mutate(Date= make_date(days(Day)+date1))
+mutated_soil_co2
+```
 
