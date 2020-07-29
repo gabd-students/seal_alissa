@@ -254,20 +254,54 @@ summarized_soil_co2_ym
 ### Mean CO2 Column Chart
 ```{r}
 ggplot(data=summarized_soil_co2_ym)+
-  geom_bar(mapping = aes(x=Month))+
+  geom_col(mapping = aes(x=Month, y=co2_mean))+
   geom_errorbar(aes(x=Month,ymin=co2_mean-std_err_co2,ymax=co2_mean+std_err_co2), width = .3)+
+  facet_wrap(~Year)
+```
+
+********* POSSIBLE WAYS TO CHANGE MONTH NAMES
+scale_x_continuous(breaks = month_numeric, 
+                    labels = month_label)
+
+xlab("Month")
+
+### Mean CO2 Point Chart using geom_linernange
+```{r}
+ggplot(data=summarized_soil_co2_ym)+
+  geom_point(mapping = aes(x=Month, y=co2_mean))+
+  geom_linerange(aes(x=Month,ymin=co2_mean-std_err_co2,ymax=co2_mean+std_err_co2), width = .3)+
   facet_wrap(~Year)
 ```
 
 
 
 
+### Import Thebes Data
+```{r}
+raw_thebes <- read_csv(here("data", "thebes_discharge.csv"))
+raw_thebes
+```
 
+### Tidy the Thebes Data
+```{r}
+thebes_tidy <- raw_thebes %>%
+  pivot_longer("1988":"2018",
+               names_to = "Year",
+               values_to = "Discharge")
+thebes_tidy
+```
 
+### Group by year and month
+```{r}
+thebes_tidy_grouped <- thebes_tidy %>% group_by(Year, Month)
+thebes_tidy_grouped
+```
 
-
-
-
+### Summarize the mean discharge
+```{r}
+thebes_tidy_grouped %>%
+  summarise(count = n(), Discharge = mean(Discharge, na.rm = TRUE))
+```
 
 
 
