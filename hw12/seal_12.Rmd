@@ -254,10 +254,11 @@ summarized_soil_co2_ym
 ### Mean CO2 Column Chart
 ```{r}
 ggplot(data=summarized_soil_co2_ym)+
-  geom_bar(mmapping = aes(x=Month))+
+  geom_bar(mapping = aes(x=Month))+
   geom_errorbar(aes(x=Month,ymin=co2_mean-std_err_co2,ymax=co2_mean+std_err_co2), width = .3)+
   facet_wrap(~Year)
 ```
+
 
 
 
