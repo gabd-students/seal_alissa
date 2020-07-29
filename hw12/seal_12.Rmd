@@ -236,14 +236,28 @@ mutated_soil_co2_2
 soil_co2_ym <- group_by(mutated_soil_co2_2,Year, Month)
 soil_co2_ym
 ```
+```{r}
+source(here("scripts","my_functions.R"))
+```
 
 ### Summarize CO2 mean
 ```{r}
 summarized_soil_co2_ym <- summarise(soil_co2_ym, co2_mean=mean(Corr_CO2, na.rm = TRUE), std_err_co2=std_err (Corr_CO2, na.rm = TRUE))
 ```
 
+### Summarize CO2 mean
+```{r}
+summarized_soil_co2_ym <- summarise(soil_co2_ym, co2_mean=mean(Corr_CO2, na.rm = TRUE), std_err_co2=std_err(Corr_CO2, na.rm = TRUE))
+summarized_soil_co2_ym
+```
 
-
+### Mean CO2 Column Chart
+```{r}
+ggplot(data=summarized_soil_co2_ym)+
+  geom_bar(mmapping = aes(x=Month))+
+  geom_errorbar(aes(x=Month,ymin=co2_mean-std_err_co2,ymax=co2_mean+std_err_co2), width = .3)+
+  facet_wrap(~Year)
+```
 
 
 
