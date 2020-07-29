@@ -2,7 +2,7 @@
 ## Calculating the standard error of mean
 ## The first argument tells whether to remove NA, defaults to FALSE
 
-std_error <- function(values,na.rm=FALSE){   
+std_err <- function(values,na.rm=FALSE){   
   ifelse(na.rm,                                 # Using ifelse() because we have 2 values
          values <- na.omit(values),             # If NA is TRUE
          values)                                # If NA is FALSE
