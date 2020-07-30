@@ -253,17 +253,26 @@ summarized_soil_co2_ym
 
 ### Mean CO2 Column Chart
 ```{r}
-ggplot(data=summarized_soil_co2_ym)+
+soil_co2_column <-  summarized_soil_co2_ym %>% 
+  mutate(Month = case_when(
+   Month == 1 ~ "Jan",
+   Month == 2 ~ "Feb",
+   Month == 3 ~ "Mar",
+   Month == 4 ~ "Apr",
+   Month == 5 ~ "May",
+    Month == 6 ~ "June",
+    Month == 7 ~ "July",
+    Month == 8 ~ "Aug",
+   Month == 9 ~ "Sep",
+   Month == 10 ~ "Oct",
+   Month == 11 ~ "Nov",
+   Month == 12 ~ "Dec"))  
+  ggplot(data=soil_co2_column)+
   geom_col(mapping = aes(x=Month, y=co2_mean))+
   geom_errorbar(aes(x=Month,ymin=co2_mean-std_err_co2,ymax=co2_mean+std_err_co2), width = .3)+
-  facet_wrap(~Year)
+    facet_wrap(~Year)
+  
 ```
-
-********* POSSIBLE WAYS TO CHANGE MONTH NAMES
-scale_x_continuous(breaks = month_numeric, 
-                    labels = month_label)
-
-xlab("Month")
 
 ### Mean CO2 Point Chart using geom_linernange
 ```{r}
@@ -271,6 +280,7 @@ ggplot(data=summarized_soil_co2_ym)+
   geom_point(mapping = aes(x=Month, y=co2_mean))+
   geom_linerange(aes(x=Month,ymin=co2_mean-std_err_co2,ymax=co2_mean+std_err_co2), width = .3)+
   facet_wrap(~Year)
+
 ```
 
 
@@ -280,31 +290,78 @@ ggplot(data=summarized_soil_co2_ym)+
 ```{r}
 raw_thebes <- read_csv(here("data", "thebes_discharge.csv"))
 raw_thebes
+
 ```
 
-### Tidy the Thebes Data
+### Tidy the Thebes data
 ```{r}
 thebes_tidy <- raw_thebes %>%
   pivot_longer("1988":"2018",
-               names_to = "Year",
-               values_to = "Discharge")
+               names_to ="Year",
+               values_to= "Discharge")%>% 
+ mutate(Month = case_when(
+   Month == 1 ~ "Jan",
+   Month == 2 ~ "Feb",
+   Month == 3 ~ "Mar",
+   Month == 4 ~ "Apr",
+   Month == 5 ~ "May",
+    Month == 6 ~ "June",
+    Month == 7 ~ "July",
+    Month == 8 ~ "Aug",
+   Month == 9 ~ "Sep",
+   Month == 10 ~ "Oct",
+   Month == 11 ~ "Nov",
+   Month == 12 ~ "Dec"))  
 thebes_tidy
-```
 
-### Group by year and month
+```
+###Group by year and month 
 ```{r}
 thebes_tidy_grouped <- thebes_tidy %>% group_by(Year, Month)
 thebes_tidy_grouped
-```
 
-### Summarize the mean discharge
+```
+### Sumarrize the mean discharge
 ```{r}
-thebes_tidy_grouped %>%
-  summarise(count = n(), Discharge = mean(Discharge, na.rm = TRUE))
+thebes_mean <- thebes_tidy_grouped %>% 
+  summarise(count = n(),Discharge = mean(Discharge, na.rm = TRUE))
+thebes_mean
+
+```
+### Add event column 
+```{r}
+thebes_tidy_w_events <- thebes_mean %>%
+  mutate(Event = case_when(Year==1993 | Year == 2011 ~ 'Flood',
+                           Year== 1988 | Year == 2012 ~ 'Drought',TRUE ~ 'Normal'))
+thebes_tidy_w_events
+
+```
+### Formation of 2nd data set
+```{r}
+thebes_major_events <- thebes_tidy_w_events %>% 
+  filter(Year%in%c("1988", "1993", "2011", "2012"))
+thebes_major_events
+
 ```
 
 
+### Plot of the mean discharge by month 
+```{r}
+p1 <- ggplot(data = thebes_tidy_w_events) +
+  geom_line(mapping = aes(x = Month, y = Discharge, group = Year), size = 0.3, color='gray70')
+p1
 
+```
+### Add smaller data set
+```{r}
+ggplot(data = thebes_tidy_w_events) +
+geom_line(mapping = aes(x = Month, y = Discharge, group = Year), size = 0.3, color = 'gray70') +
+  geom_line(data = thebes_major_events, mapping = aes( x = Month, y = Discharge, group = Year, color = Event))
+
+```
+
+
+### could not divide my discharge vaules by 1000, so my y axis is very different from the example....
 
 
 
