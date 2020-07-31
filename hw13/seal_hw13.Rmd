@@ -33,3 +33,10 @@ beta_gliadin_cleaned <- str_replace_all(beta_gliadin_raw, "\\d", "") %>%
 beta_gliadin_cleaned
 ```
 
+### Collapse the strings
+
+```{r}
+beta_gliadan_collapsed <- str_c(beta_gliadin_cleaned, collapse = "")
+beta_gliadan_collapsed
+```
+
