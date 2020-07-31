@@ -1,0 +1,35 @@
+---
+---
+title: "HW13: Strings and Things"
+author: "Alissa Seal"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+### Load Libraries 
+```{r}
+library(tidyverse)
+library(here)
+library(ggthemes)
+```
+
+### Part1: DNA Strings
+
+### Import beta_gliadin data
+
+```{r}
+beta_gliadin_raw <- read_lines(here("Data", "beta_gliadin.txt"), skip = 1)
+beta_gliadin_raw
+
+```
+
+### Replace whitespace and digits with nothing
+
+```{r}
+beta_gliadin_cleaned <- str_replace_all(beta_gliadin_raw, "\\d", "") %>%
+  str_replace_all("\\s", "")
+beta_gliadin_cleaned
+```
+
