@@ -40,3 +40,29 @@ beta_gliadan_collapsed <- str_c(beta_gliadin_cleaned, collapse = "")
 beta_gliadan_collapsed
 ```
 
+### Convrt to uppercase
+```{r}
+beta_gliadan_upper <- str_to_upper(beta_gliadan_collapsed)
+beta_gliadan_upper
+```
+
+### Return the length of string
+```{r}
+str_length(beta_gliadan_upper)
+```
+
+### Count letters that are not A, C, G, T
+```{r}
+str_count(beta_gliadan_upper, ".A.C.G.T")
+```
+
+### Count the possible start codons
+```{r}
+str_count(beta_gliadan_upper, "ATG")
+```
+
+### Count the possible stop codons
+```{r}
+str_count(beta_gliadan_upper, "TGA|TAA")
+```
+
