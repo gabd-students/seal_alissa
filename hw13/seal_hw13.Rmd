@@ -192,10 +192,21 @@ ggplot(final_ants_data,aes(x = reorder(species,total),y = total),group = species
 
 ```
 
+### Part 3: Featuring Phlox Flowers
 
+### Import and wrangle the first data set
 
+```{r}
+flower_size_raw <- read_csv(here("Data", "flower_size.csv")) 
+flower_size_raw
+```
 
-
+### Filter out rows were flower number is not NA
+```{r}
+filtered_flowers <- flower_size_raw %>%
+  filter(is.na("Flower number"))
+filtered_flowers
+```
 
 
 
