@@ -143,7 +143,32 @@ promotor
 str_length(promotor)
 ```
 
+### PART 2: ANTS
 
+### Import Ants Data
+```{r}
+ants_raw <- read_csv(here("Data", "ants.csv"))
+ants_raw
+
+```
+
+
+### Wrangle the data and select columns
+```{r}
+ants_data_wrangled <- ants_raw %>% 
+  pivot_longer(names_to="species",values_to="abundance",matches("[:upper:].+\\.[:lower:].+", ignore.case = FALSE)) %>%
+  select("year", "species", "abundance")
+ants_data_wrangled
+
+```
+
+```{r}
+ants_data_wrangled %>%
+  mutate(species=str_replace(species, "C.....+\\.line.+", "Cremline")) %>%
+  mutate(species=str_replace(species, "H....+\\.opac.+", "Hypoopac")) %>%
+  mutate(species=str_replace(species, "N....+\\.opac.+", "Neivopac")) %>%
+  mutate(species=str_replace(species, "S....+\\.loui.+", "Struloui"))
+```
 
 
 
