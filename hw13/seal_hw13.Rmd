@@ -156,22 +156,41 @@ ants_raw
 ### Wrangle the data and select columns
 ```{r}
 ants_data_wrangled <- ants_raw %>% 
-  pivot_longer(names_to="species",values_to="abundance",matches("[:upper:].+\\.[:lower:].+", ignore.case = FALSE)) %>%
+  pivot_longer(names_to="species",values_to="abundance",matches("[A-Z].+\\..+", ignore.case = FALSE)) %>%
   select("year", "species", "abundance")
 ants_data_wrangled
 
 ```
 
+### Rename Species
 ```{r}
-ants_data_wrangled %>%
-  mutate(species=str_replace(species, "C.....+\\.line.+", "Cremline")) %>%
-  mutate(species=str_replace(species, "H....+\\.opac.+", "Hypoopac")) %>%
-  mutate(species=str_replace(species, "N....+\\.opac.+", "Neivopac")) %>%
-  mutate(species=str_replace(species, "S....+\\.loui.+", "Struloui"))
+ants_mutated <- ants_data_wrangled %>% 
+  mutate(species=str_replace(species, "(^[A-Z][a-z]{0,3}).*\\.([a-z]{1,4}).*", "\\1\\2"))
+ants_mutated
+
 ```
 
+### Create 2010 and 2011 levels, group by year and species and use sum() to add up the abundance of each species
 
+```{r}
+final_ants_data <- ants_mutated %>%
+  mutate(year = factor(year, ordered = TRUE, levels = c(2010, 2011))) %>%
+   group_by(year, species) %>%
+   summarise(total = sum(abundance))
+final_ants_data
 
+```
+
+### Plot the data
+```{r}
+ggplot(final_ants_data,aes(x = reorder(species,total),y = total),group = species)+
+  geom_line()+
+  geom_point(aes(shape = year),size = 2)+
+  coord_flip()+
+  labs(x = NULL, y = "Total Abundance", shape = "Year")+
+  theme_minimal() 
+
+```
 
 
 
