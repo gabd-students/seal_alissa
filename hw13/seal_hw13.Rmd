@@ -31,6 +31,7 @@ beta_gliadin_raw
 beta_gliadin_cleaned <- str_replace_all(beta_gliadin_raw, "\\d", "") %>%
   str_replace_all("\\s", "")
 beta_gliadin_cleaned
+
 ```
 
 ### Collapse the strings
@@ -38,31 +39,131 @@ beta_gliadin_cleaned
 ```{r}
 beta_gliadan_collapsed <- str_c(beta_gliadin_cleaned, collapse = "")
 beta_gliadan_collapsed
+
 ```
 
 ### Convrt to uppercase
 ```{r}
 beta_gliadan_upper <- str_to_upper(beta_gliadan_collapsed)
 beta_gliadan_upper
+
 ```
 
 ### Return the length of string
 ```{r}
 str_length(beta_gliadan_upper)
+
 ```
 
 ### Count letters that are not A, C, G, T
 ```{r}
 str_count(beta_gliadan_upper, ".A.C.G.T")
+
 ```
 
 ### Count the possible start codons
 ```{r}
 str_count(beta_gliadan_upper, "ATG")
+
 ```
 
 ### Count the possible stop codons
 ```{r}
 str_count(beta_gliadan_upper, "TGA|TAA")
+
 ```
+
+### Create caat_box and tata_box variables
+```{r}
+caat_box <- "CCAAT"
+tata_box <- "CTATAA"
+
+```
+
+### Count how many times caat_box occurs in the DNA sequence
+```{r}
+str_count(beta_gliadan_upper, caat_box)
+
+```
+
+### Count how many times tata_box occurs in the DNA sequence
+```{r}
+str_count(beta_gliadan_upper, tata_box)
+
+```
+
+### Make a regex search string called caat_seq
+```{r}
+caat_seq <- "CCAAT.{100,150}ATG"
+
+```
+
+### Count how many times this sequence occurs
+```{r}
+str_count(beta_gliadan_upper, caat_seq)
+
+```
+
+### Create tata_seq search string
+```{r}
+tata_seq <- "CTATAA.{50,100}ATG"
+
+```
+
+### Count how many times this sequence occurs
+```{r}
+str_count(beta_gliadan_upper, tata_seq)
+
+```
+
+### Extract all caat_seq, determine the length of each sequence 
+```{r}
+caat_seq_all <- str_extract_all(beta_gliadan_upper, caat_seq, simplify = TRUE)
+str_length(caat_seq_all)
+
+```
+
+### Use str_which() 
+```{r}
+str_which(caat_seq_all, tata_seq)
+
+```
+
+### str_which() would only show the position of the match, not the match itself
+
+### Use str_subset() to print the entire match
+```{r}
+promotor <- str_subset(caat_seq_all, tata_seq)
+promotor
+
+```
+
+### Determine the length of the match
+```{r}
+str_length(promotor)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
