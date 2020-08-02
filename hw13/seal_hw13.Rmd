@@ -203,11 +203,16 @@ flower_size_raw
 
 ### Filter out rows were flower number is not NA
 ```{r}
-filtered_flowers <- flower_size_raw %>%
-  filter(is.na("Flower number"))
-filtered_flowers
+flower_data_filtered <- drop_na(flower_size_raw, "Flower number")
+flower_data_filtered
 ```
 
+### Select Columns
+```{r}
+wrangled_flower_data <- select(flower_data_filtered, "Species", "Corolla length (cm)", "Corolla width throat (cm)") %>%
+  rename("species" = "Species", "cor_length" = "Corolla length (cm)", "throat_width" = "Corolla width throat (cm)")
+wrangled_flower_data
+```
 
 
 
