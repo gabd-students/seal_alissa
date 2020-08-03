@@ -252,22 +252,41 @@ lower_48 <- c("Alabama","Arizona","Arkansas","California","Colorado","Connecticu
 ```
 
 ## Use filter() to keep only states in the states object that listed in the lower_48 vector
+
 ```{r}
-states <- st_read(here::here("data", "shape_files", "cb_2017_us_state_500k.shp"),
+states <- st_read(here::here("data", "hw14_data", "shape_files", "cb_2017_us_state_500k.shp"),
 stringsAsFactors = TRUE)
+states
 ```
+
+## Create a tibble witht eh state shapes to plot
+```{r}
+states_df <- states %>%
+  dplyr::filter(NAME %in% lower_48)
+states_df
+```
+## FIPS States
+```{r}
+str(states_df$STATEFP)
+```
+
+## Capture the FIPS leveslf rom states_df
+##Use to factor the FIPS and staes names in the next step
 
 ```{r}
-
+state_levels <- levels(states_df$STATEFP)
+name_levels <- levels(states_df$NAME)
 ```
 
-
-
-
-
-
-
-
+## Import he state FIPS, remove an unneeded column, rename the FIPS column to STATEFP, then use mutate() to change the STATEFP column to an unordered factor
+```{r}
+library(tidyverse)
+fips <- read_csv(here::here("data","hw14_data", "state_fips.csv")) %>%
+  select(-abbr) %>%
+  rename(STATEFP = FIPS) %>% 
+  mutate(STATEFP = factor(STATEFP, levels = state_levels))
+fips
+```
 
 
 
