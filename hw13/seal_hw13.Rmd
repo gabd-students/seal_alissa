@@ -254,7 +254,7 @@ pollinators
 ### Separate pollinator column
 ```{r}
 syndrome <- pollinators %>%
-  separate(Pollinator, into = "primary pollinator", sep = "(,| )")
+  separate(Pollinator, into = "syndrome", sep = "(,| )")
 syndrome
 
 ```
@@ -272,12 +272,14 @@ pholox_plot_1 <- phlox_data %>%
   ggplot()+
   geom_point(mapping = aes(x=mean_cor_length, y=mean_throat_width, color= syndrome))
 pholox_plot_1
+
 ```
 ### Check Syndrome Counts
 ```{r}
 phlox_data %>%
   group_by(syndrome) %>%
   count(syndrome)
+
 ```
 
 ### Phlox Plot 2, Create other inscets in legend
@@ -289,5 +291,45 @@ phlox_data_2 <- phlox_data %>%
 phlox_data_2 %>%
   ggplot()+
   geom_point(mapping = aes(x=mean_cor_length, y=mean_throat_width, color=syndrome))
+
 ```
+
+### Mutate Data
+```{r}
+mutated_phlox <- phlox_data_2 %>%
+  mutate(syndrome_group = case_when(syndrome=="autogamous"~"Autogamous", syndrome=="bat"~"Mammal", syndrome=="hummingbird"~"Bird", TRUE~"Insect"))
+mutated_phlox
+
+```
+
+### Plot data, Phlox plot 3
+```{r}
+mutated_phlox %>%
+  ggplot()+
+  geom_point(mapping = aes(x=mean_cor_length, y=mean_throat_width, color= syndrome_group))
+
+```
+
+### Improved Plot
+```{r}
+mutated_phlox %>%
+  ggplot()+
+  geom_point(aes(x=max_cor_length, y= max_throat_width, color=syndrome_group))+
+  scale_color_viridis_d(type= "qual", palette= "inferno")+
+  labs(x="Mean Length (cm)", y="Mean Width (cm)", color="Syndrome")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
