@@ -228,10 +228,11 @@ separated_flowers
 ### Group data by genus and species and use summarize to calculate the mean and max lengths an widths
 ```{r}
 summarized_flower_data <- separated_flowers %>%
-  summarize("mean_cor_length"=mean(cor_length, na.rm = TRUE), "mean_throat_width"=mean(throat_width, na.rm = TRUE), "max_cor_length"=max(cor_length, na.rm = TRUE), "max_throat_width"= max(throat_width, na.rm = TRUE))
+  group_by(genus, species) %>%
+  summarize("mean_cor_length" = mean(cor_length, na.rm = TRUE), "mean_throat_width" = mean(throat_width, na.rm = TRUE), "max_cor_length" = max(cor_length, na.rm = TRUE), "max_throat_width"= max(throat_width, na.rm = TRUE))
 summarized_flower_data
-
 ```
+
 
 ### Import Data
 ```{r}
@@ -264,8 +265,29 @@ phlox_data <- inner_join(summarized_flower_data, syndrome)
 phlox_data
 ```
   
-### Phlox Plot 1
+### Phlox Plot 1 with improved legend
 ```{r}
+pholox_plot_1 <- phlox_data %>%
+  mutate(syndrome=str_replace(syndrome, "(^be.*e$)","\\1s"))%>%
+  ggplot()+
+  geom_point(mapping = aes(x=mean_cor_length, y=mean_throat_width, color= syndrome))
+pholox_plot_1
+```
+### Check Syndrome Counts
+```{r}
+phlox_data %>%
+  group_by(syndrome) %>%
+  count(syndrome)
+```
 
+### Phlox Plot 2, Create other inscets in legend
+```{r}
+phlox_data_2 <- phlox_data %>%
+  mutate(syndrome=str_replace(syndrome,"(^be.*e$)", "\\1s"),
+         syndrome=str_replace(syndrome,".+.?es", "other insects"))
+
+phlox_data_2 %>%
+  ggplot()+
+  geom_point(mapping = aes(x=mean_cor_length, y=mean_throat_width, color=syndrome))
 ```
 
