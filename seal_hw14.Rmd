@@ -248,17 +248,35 @@ mean_mort
 
 # Trim Alaska, Hawaii, and territories from the shapefile.
 ```{r}
-lower_48 <- c("Alabama","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida")
+lower_48 <- c("Alabama","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida", "Georgia", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Mryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming")
 ```
 
 ## Use filter() to keep only states in the states object that listed in the lower_48 vector
 ```{r}
-states <- st_read(here::here("data", "hw14_data/shape_files", "cb_2017_us_state_500k.shp"),
+states <- st_read(here::here("data", "shape_files", "cb_2017_us_state_500k.shp"),
 stringsAsFactors = TRUE)
 ```
 
 ```{r}
-states_df <- states %>%
-dplyr::filter(NAME %in% lower_48)
+
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
