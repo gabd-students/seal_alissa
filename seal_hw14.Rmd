@@ -33,7 +33,7 @@ us_missouri <- map_data (map = "state",
                          region = "missouri")
 ```
 
-## OUtline of Alabama, Florida, Mississippi, and North Carolina
+## Outline of Alabama, Florida, Mississippi, and North Carolina
 ```{r}
 us_other <- subset(x= usa, 
                    subset= region %in% c("alabama",
@@ -128,5 +128,79 @@ mo_map
 ## us_map and a mo_map side by side
 ```{r}
 us_map + mo_map + plot_layout(ncol = 2, widths = c(1.5,1))
+```
+
+
+
+
+
+
+
+### Outline Maps: My Turn
+
+## Outline of the 48 contiguous states
+```{r}
+usa <- map_data(map= "state")
+```
+
+## Outline of just Arkansas
+```{r}
+us_arkansas <- map_data (map = "state",
+                         region = "arkansas")
+```
+
+
+## U.S. map should highlight in black the state of your birth
+```{r}
+us_map <- ggplot() +
+geom_polygon(data = us_arkansas,
+             aes(x = long, y = lat,
+                 group = group),
+             fill = "black") +
+geom_polygon(data = usa,
+             aes(x=long,
+                 y = lat,
+                 group = group),
+             fill = NA,
+             color = "black") +
+theme_map() +
+coord_fixed(1.3)
+us_map
+```
+
+## State map highlighting the county of your birth
+```{r}
+arkansas <- map_data("county", "arkansas")
+ar_greene <- subset(arkansas, subregion %in% c("greene"))
+ar_map <- ggplot() +
+geom_polygon(data = arkansas, aes(x=long, y = lat, group = group), fill = NA, color = "black") +
+geom_polygon(data = ar_greene, aes(x = long, y = lat, group = group), fill = "black") +
+theme_map() +
+coord_fixed(1.3)
+ar_map
+```
+
+## Outline other counties
+```{r}
+ar_other_counties <- subset(us_arkansas, subregion %in% c("arkansas","sharp"))
+```
+
+
+
+## Two additional counties in gray
+```{r}
+
+```
+
+
+
+
+
+
+
+```{r}
+birth_counties <- ggplot()+
+  geom_polygon(data= ar_other_counties, aes(x= long, y= lat, group= group),fill= "gray")
+birth_counties
 ```
 
