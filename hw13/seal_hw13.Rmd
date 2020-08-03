@@ -199,12 +199,14 @@ ggplot(final_ants_data,aes(x = reorder(species,total),y = total),group = species
 ```{r}
 flower_size_raw <- read_csv(here("Data", "flower_size.csv")) 
 flower_size_raw
+
 ```
 
 ### Filter out rows were flower number is not NA
 ```{r}
 flower_data_filtered <- drop_na(flower_size_raw, "Flower number")
 flower_data_filtered
+
 ```
 
 ### Select Columns
@@ -212,18 +214,58 @@ flower_data_filtered
 wrangled_flower_data <- select(flower_data_filtered, "Species", "Corolla length (cm)", "Corolla width throat (cm)") %>%
   rename("species" = "Species", "cor_length" = "Corolla length (cm)", "throat_width" = "Corolla width throat (cm)")
 wrangled_flower_data
+
 ```
 
+### Use separate to separate genus and species
+```{r}
+separated_flowers <- wrangled_flower_data %>%
+  separate(species, into = c("genus", "species"))
+separated_flowers
 
+```
 
+### Group data by genus and species and use summarize to calculate the mean and max lengths an widths
+```{r}
+summarized_flower_data <- separated_flowers %>%
+  summarize("mean_cor_length"=mean(cor_length, na.rm = TRUE), "mean_throat_width"=mean(throat_width, na.rm = TRUE), "max_cor_length"=max(cor_length, na.rm = TRUE), "max_throat_width"= max(throat_width, na.rm = TRUE))
+summarized_flower_data
 
+```
 
+### Import Data
+```{r}
+pollinators_raw <- read_csv(here("Data", "flower_pollinators.csv"))
+pollinators_raw
 
+```
 
+### Remove columns, remove rows, separate into genus and species
+```{r}
+pollinators <- pollinators_raw %>%
+   select(-c(starts_with("Source"), "Color")) %>%
+   filter(!is.na(Pollinator)) %>%
+   separate(Species, into = c("genus", "species"))
+pollinators
 
+```
 
+### Separate pollinator column
+```{r}
+syndrome <- pollinators %>%
+  separate(Pollinator, into = "primary pollinator", sep = "(,| )")
+syndrome
 
+```
 
+### Use inner_join to join the data sets
+```{r}
+phlox_data <- inner_join(summarized_flower_data, syndrome)
+phlox_data
+```
+  
+### Phlox Plot 1
+```{r}
 
-
+```
 
