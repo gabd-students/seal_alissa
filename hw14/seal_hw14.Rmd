@@ -330,19 +330,41 @@ ggplot(states_df) +
 ### Chropleth Map: My Turn
 ## Import Data
 ```{r}
-lyme_disease_raw <- read_csv(here::here("data", "lyme_disease.csv"))
+lyme_disease_raw <- read_csv(here::here("data", "lyme_disease.csv"),skip = 1, na = c("-"))
 lyme_disease_raw
+
 ```
 
-### Tidy Data
+### Add New 2017 Column, Remove Columns, Use pivot_longer(), Group by State, and Summarize Mean
 ```{r}
 lyme_disease_tidy <- lyme_disease_raw %>%
-  na.omit()
+  mutate(`2017` = `2017_Confirmed` + `2017_Probable`)%>%
+  dplyr::select(State:`2016`, `2017`)%>%
+  pivot_longer("2007":"2017",names_to = "Year",values_to = "Cases") %>%
+  group_by(State) %>% 
+  summarise(Mean_Cases = mean(Cases),Log_Mean = log10(Mean_Cases))
 lyme_disease_tidy
+
 ```
 
+## Merging the fips data frame to Lyme Disease Data
 
-#####  need to finish this section
+```{r}
+lyme_disease_tidy <-left_join(lyme_disease_tidy, fips)
+states_df <-left_join(states_df, lyme_disease_tidy)
+
+```
+## Plot Lyme Data
+```{r}
+ggplot(states_df) +
+  geom_sf(aes(fill = Log_Mean)) +
+  scale_fill_viridis_c(name = "Lyme Disease \n Mean Cases",
+                       option = "plasma", labels = c("<1", "10", "100", "1000", "5000")) +
+  coord_sf(crs =st_crs(5070)) +
+  theme_bw() +
+  theme(legend.position = "bottom")
+
+```
 
 ### Part 3: Dot Distribution Map
 
@@ -363,6 +385,7 @@ min_lat  <-   31
 max_lat  <-   50
 
 set.seed(9618973)
+
 ```
 
 
@@ -376,6 +399,7 @@ bigfoot <- bigfoot %>%
   sample_n(300) %>% 
   mutate(name = "Gigantopithecus") %>% 
   dplyr::select(name, long, lat)
+
 ```
 ### Bear Data
 ```{r}
@@ -384,6 +408,7 @@ bears <- read_csv(here::here("data", "bears.csv"))
 both_species <- bind_rows(bigfoot, bears)
 
 head(both_species)
+
 ```
 
 ```{r}
@@ -402,6 +427,7 @@ base = get_stamenmap(bbox = c(min_long,
 
 
 ggmap(base)
+
 ```
 ### Terrain Map with Bigfoot location
 ```{r}
@@ -410,12 +436,14 @@ base <- ggmap(base)
 base + geom_point(data = bigfoot,
                   aes(x = long,
                       y = lat))
+
 ```
 ### Terrain Map with Bears Location
 ```{r}
 base + geom_point(data = bears,
                   aes(x = long,
                       y = lat))
+
 ```
 
 ### Map with wooded areas bears prefer
@@ -442,6 +470,7 @@ min_lat  <-   31
 max_lat  <-   50
 
 set.seed(9618973)
+
 ```
 
 
@@ -455,6 +484,7 @@ bigfoot <- bigfoot %>%
   sample_n(300) %>% 
   mutate(name = "Gigantopithecus") %>% 
   dplyr::select(name, long, lat)
+
 ```
 ### Bear Data
 ```{r}
@@ -463,6 +493,7 @@ bears <- read_csv(here::here("data", "bears.csv"))
 both_species <- bind_rows(bigfoot, bears)
 
 head(both_species)
+
 ```
 
 ```{r}
@@ -481,6 +512,7 @@ base = get_stamenmap(bbox = c(min_long,
 
 
 ggmap(base)
+
 ```
 ### Terrain Map with Bigfoot location
 ```{r}
@@ -489,12 +521,14 @@ base <- ggmap(base)
 base + geom_point(data = bigfoot,
                   aes(x = long,
                       y = lat))
+
 ```
 ### Terrain Map with Bears Location
 ```{r}
 base + geom_point(data = bears,
                   aes(x = long,
                       y = lat))
+
 ```
 
 ### Map with wooded areas bears prefer
@@ -523,6 +557,7 @@ min_lat  <-   31
 max_lat  <-   50
 
 set.seed(1513373)
+
 ```
 
 
@@ -536,6 +571,7 @@ bigfoot <- bigfoot %>%
   sample_n(300) %>% 
   mutate(name = "Gigantopithecus") %>% 
   dplyr::select(name, long, lat)
+
 ```
 ### Bear Data
 ```{r}
@@ -544,6 +580,7 @@ bears <- read_csv(here::here("data", "bears.csv"))
 both_species <- bind_rows(bigfoot, bears)
 
 head(both_species)
+
 ```
 
 ```{r}
@@ -562,6 +599,7 @@ base = get_stamenmap(bbox = c(min_long,
 
 
 ggmap(base)
+
 ```
 ### Terrain Map with Bigfoot location
 ```{r}
@@ -570,12 +608,14 @@ base <- ggmap(base)
 base + geom_point(data = bigfoot,
                   aes(x = long,
                       y = lat))
+
 ```
 ### Terrain Map with Bears Location
 ```{r}
 base + geom_point(data = bears,
                   aes(x = long,
                       y = lat))
+
 ```
 
 ### Map with wooded areas bears prefer
