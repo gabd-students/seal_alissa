@@ -31,6 +31,7 @@ usa <- map_data(map= "state")
 ```{r}
 us_missouri <- map_data (map = "state",
                          region = "missouri")
+
 ```
 
 ## Outline of Alabama, Florida, Mississippi, and North Carolina
@@ -40,6 +41,7 @@ us_other <- subset(x= usa,
                                          "florida",
                                          "mississippi",
                                          "north carolina"))
+
 ```
 
 ```{r}
@@ -54,6 +56,7 @@ ggplot()+
                    y= lat,
                    group=group),
                fill= "gray")
+
 ```
 
 ## Add Missouri with emphasis 
@@ -68,6 +71,7 @@ geom_polygon(data = us_missouri,
              aes(x = long, y = lat,
                  group = group),
              fill = "black")
+
 ```
 
 ## Outline of all 48 states
@@ -88,6 +92,7 @@ geom_polygon(data = usa,
                  group = group),
              fill = NA,
              color = "black")
+
 ```
 ## Add the filled states first so that the black outline of all
 ## States are overlaid on top
@@ -108,9 +113,10 @@ geom_polygon(data = usa,
                  group = group),
              fill = NA,
              color = "black") +
-theme_map() +
+  theme_map() +
 coord_fixed(1.3)
 us_map
+
 ```
 
 ## Missouri Map
@@ -123,17 +129,14 @@ geom_polygon(data = mo_scott, aes(x = long, y = lat, group = group), fill = "bla
 theme_map() +
 coord_fixed(1.3)
 mo_map
+
 ```
 
 ## us_map and a mo_map side by side
 ```{r}
 us_map + mo_map + plot_layout(ncol = 2, widths = c(1.5,1))
+
 ```
-
-
-
-
-
 
 
 ### Outline Maps: My Turn
@@ -141,12 +144,14 @@ us_map + mo_map + plot_layout(ncol = 2, widths = c(1.5,1))
 ## Outline of the 48 contiguous states
 ```{r}
 usa <- map_data(map= "state")
+
 ```
 
 ## Outline of just Arkansas
 ```{r}
 us_arkansas <- map_data (map = "state",
                          region = "arkansas")
+
 ```
 
 
@@ -166,6 +171,7 @@ geom_polygon(data = usa,
 theme_map() +
 coord_fixed(1.3)
 us_map
+
 ```
 
 ## State map highlighting the county of your birth
@@ -178,11 +184,13 @@ geom_polygon(data = ar_greene, aes(x = long, y = lat, group = group), fill = "bl
 theme_map() +
 coord_fixed(1.3)
 ar_map
+
 ```
 
 ## Outline other counties
 ```{r}
 ar_other_counties <- subset(x= us_arkansas, subregion %in% c("arkansas","sharp"))
+
 ```
 
 
@@ -199,6 +207,7 @@ geom_polygon(data = ar_greene, aes(x = long, y = lat, group = group), fill = "bl
 theme_map() +
 coord_fixed(1.3)
 ar_map_counties
+
 ```
 
 ### Part 2: Choropleth Maps
@@ -215,6 +224,7 @@ skin_cancer_raw <-read_delim(file = here::here("data", "skin_cancer.txt"),
 delim = " ",
 skip = 7,
 trim_ws = TRUE)
+
 ```
 ## Wrangle the Data
 
@@ -234,6 +244,7 @@ State == "RhodeIsland" ~ "Rhode Island",
 State == "WestVirginia" ~ "West Virginia",
 TRUE ~ State))
 skin_cancer
+
 ```
 
 ## Calculate mortality rate to the mean rate
@@ -244,11 +255,13 @@ mean_mort <- mean(skin_cancer$Mort)
 skin_cancer_adj <- skin_cancer %>%
 mutate(relative_mort = Mort - mean_mort)
 mean_mort
+
 ```
 
 # Trim Alaska, Hawaii, and territories from the shapefile.
 ```{r}
 lower_48 <- c("Alabama","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida", "Georgia", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Mryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming")
+
 ```
 
 ## Use filter() to keep only states in the states object that listed in the lower_48 vector
@@ -257,6 +270,7 @@ lower_48 <- c("Alabama","Arizona","Arkansas","California","Colorado","Connecticu
 states <- st_read(here::here("data/shape_files", "cb_2017_us_state_500k.shp"),
 stringsAsFactors = TRUE)
 states
+
 ```
 
 ## Create a tibble witht eh state shapes to plot
@@ -264,14 +278,15 @@ states
 states_df <- states %>%
   dplyr::filter(NAME %in% lower_48)
 states_df
+
 ```
 ## FIPS States
 ```{r}
 str(states_df$STATEFP)
 ```
 
-## Capture the FIPS leveslf rom states_df
-##Use to factor the FIPS and staes names in the next step
+## Capture the FIPS levesl from states_df
+##Use to factor the FIPS and states names in the next step
 
 ```{r}
 state_levels <- levels(states_df$STATEFP)
@@ -283,13 +298,12 @@ name_levels <- levels(states_df$NAME)
 ```{r}
 library(tidyverse)
 fips <- read_csv(here::here("data", "state_fips.csv")) %>% 
-  select(-abbr)%>%
+  dplyr::select(-abbr)%>%
   rename(STATEFP = FIPS) %>% 
   mutate(STATEFP = factor(STATEFP, levels = state_levels))
 fips
-```
-### There is a error here... 
 
+```
 
 ## Use left_join to merge the data in a single file
 
@@ -310,14 +324,21 @@ ggplot(states_df) +
   coord_sf(crs = st_crs(5070)) +
   theme_bw() +
   theme(legend.position = "bottom")
+
 ```
 
 ### Chropleth Map: My Turn
-
 ## Import Data
 ```{r}
 lyme_disease_raw <- read_csv(here::here("data", "lyme_disease.csv"))
 lyme_disease_raw
+```
+
+### Tidy Data
+```{r}
+lyme_disease_tidy <- lyme_disease_raw %>%
+  na.omit()
+lyme_disease_tidy
 ```
 
 
@@ -589,7 +610,28 @@ min_lat  <- -42
 max_lat  <- -8
 ```
 
+## Conversion
+```{r}
+earthquakes <- quakes %>% 
+   mutate(depth = depth * 3280.84)
+```
 
 
+## Auto read saved file
+```{r}
+fiji <- getNOAA.bathy(lon1 = min_long,
+                      lon2 = max_long,
+                      lat1 = min_lat,
+                      lat2 = max_lat,
+                      antimeridian = TRUE,
+                      keep = TRUE)
+```
+## Autoplot without the .bathy ext
 
+```{r}
+autoplot.bathy(fiji, 
+         geom = c("raster", "contour"),
+         size = 0.1,
+         na.rm = TRUE)
+```
 
