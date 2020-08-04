@@ -694,3 +694,5 @@ base_map_2 +
   theme(legend.text = element_text(face= "italic"))
 ```
 
+
+## SOOO MANY ERRORS! I was hoping to see all the cool maps, but it keeps telling me that my file already existed and wouldn't run the codes. :/ However, I was fortunate enough to see Amanda's... this assignment was by far my favorite other than part 4 not cooperating! 
