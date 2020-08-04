@@ -582,12 +582,106 @@ fiji <- getNOAA.bathy(lon1 = min_long,
                       antimeridian = TRUE,
                       keep = TRUE)
 ```
-## Autoplot without the .bathy ext
+## Plot bathymetic data
 
 ```{r}
 autoplot.bathy(fiji, 
          geom = c("raster", "contour"),
          size = 0.1,
          na.rm = TRUE)
+```
+
+## Custom gradient added axis labels
+```{r}
+base_map <- autoplot(fiji, 
+         geom = c("raster","contour"),
+         size = 0.1,
+         na.rm = TRUE) +
+  scale_fill_gradient2(low = "dodgerblue4", 
+                       mid = "gainsboro", 
+                       high = "darkgreen",
+                       name = "Depth (ft)") +
+  labs(x = "Longitude",
+       y = "Latitude") +
+  theme(axis.title.y = element_text(angle = 0, 
+                                    vjust = 0.5))
+```
+
+##Add earthquake data to base_map
+```{r}
+base_map + 
+  geom_point(data = earthquakes,
+             aes(x = long,
+                 y = lat))
+```
+
+## Make points more transparent
+```{r}
+ base_map + 
+  geom_point(data = earthquakes,
+             aes(x = long,
+                 y = lat,
+                 size = mag),
+             alpha = 0.4)
+```
+
+
+## Set point size to reflect magnitude
+```{r}
+base_map + 
+  geom_point(data = earthquakes,
+             aes(x = long,
+                 y = lat,
+                 size = mag),
+             alpha = 0.4) +
+  scale_size_continuous(range = c(0.5,3), name = "Magnitude")
+
+```
+
+
+### Bathymetry: Now You Try It
+
+## Global Vars
+```{r}
+min_long: -90
+max_long: -58
+min_lat: 8
+max_lat: 28
+```
+
+## Create blennies data object
+```{r}
+blennies <- read_csv(here::here("data", "blennies.csv"))
+```
+
+## Get bathymetic data for the Caribbean Sea
+```{r}
+carib_sea <- getNOAA.bathy(lon1 = min_long,
+                      lon2 = max_long,
+                      lat1 = min_lat,
+                      lat2 = max_lat,
+                      antimeridian = FALSE,
+                      keep = TRUE)
+```
+
+## Plot base bathymetic map, save to base_map
+```{r}
+base_map_2 <- autoplot(carib_sea, 
+         geom = c("raster","contour"),
+         size = 0.1,
+         na.rm = TRUE) +
+  scale_fill_etopo(guide=FALSE) +
+  labs(x = "Longitude",
+       y = "Latitude") +
+  theme(axis.title.y = element_text(angle = 0, 
+                                    vjust = 0.5))
+```
+
+## Add the blennies
+```{r}
+base_map_2 + 
+  geom_point(data = blennies,
+             aes(x = long,
+                 y = lat, shape = name), color = "red", size = 2.8)
 ```
 
