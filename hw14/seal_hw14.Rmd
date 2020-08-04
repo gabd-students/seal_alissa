@@ -581,6 +581,7 @@ fiji <- getNOAA.bathy(lon1 = min_long,
                       lat2 = max_lat,
                       antimeridian = TRUE,
                       keep = TRUE)
+
 ```
 ## Plot bathymetic data
 
@@ -589,6 +590,7 @@ autoplot.bathy(fiji,
          geom = c("raster", "contour"),
          size = 0.1,
          na.rm = TRUE)
+
 ```
 
 ## Custom gradient added axis labels
@@ -605,6 +607,7 @@ base_map <- autoplot(fiji,
        y = "Latitude") +
   theme(axis.title.y = element_text(angle = 0, 
                                     vjust = 0.5))
+
 ```
 
 ##Add earthquake data to base_map
@@ -613,6 +616,7 @@ base_map +
   geom_point(data = earthquakes,
              aes(x = long,
                  y = lat))
+
 ```
 
 ## Make points more transparent
@@ -623,6 +627,7 @@ base_map +
                  y = lat,
                  size = mag),
              alpha = 0.4)
+
 ```
 
 
@@ -635,6 +640,7 @@ base_map +
                  size = mag),
              alpha = 0.4) +
   scale_size_continuous(range = c(0.5,3), name = "Magnitude")
+
 
 ```
 
@@ -682,6 +688,9 @@ base_map_2 <- autoplot(carib_sea,
 base_map_2 + 
   geom_point(data = blennies,
              aes(x = long,
-                 y = lat, shape = name), color = "red", size = 2.8)
+                 y = lat, shape = name), color = "red", size = 2.8)+ 
+  labs(shape= "Species")+
+  theme(legend.position = "bottom")+
+  theme(legend.text = element_text(face= "italic"))
 ```
 
