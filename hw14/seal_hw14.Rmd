@@ -211,7 +211,7 @@ library(tidyverse)
 
 ## Import skin cancer data
 ```{r}
-skin_cancer_raw <-read_delim(file = here::here("data","hw14_data","skin_cancer.txt"),
+skin_cancer_raw <-read_delim(file = here::here("data", "skin_cancer.txt"),
 delim = " ",
 skip = 7,
 trim_ws = TRUE)
@@ -254,7 +254,7 @@ lower_48 <- c("Alabama","Arizona","Arkansas","California","Colorado","Connecticu
 ## Use filter() to keep only states in the states object that listed in the lower_48 vector
 
 ```{r}
-states <- st_read(here::here("data", "hw14_data", "shape_files", "cb_2017_us_state_500k.shp"),
+states <- st_read(here::here("data/shape_files", "cb_2017_us_state_500k.shp"),
 stringsAsFactors = TRUE)
 states
 ```
@@ -279,21 +279,315 @@ name_levels <- levels(states_df$NAME)
 ```
 
 ## Import he state FIPS, remove an unneeded column, rename the FIPS column to STATEFP, then use mutate() to change the STATEFP column to an unordered factor
+
 ```{r}
 library(tidyverse)
-fips <- read_csv(here::here("data","hw14_data", "state_fips.csv")) %>%
-  select(-abbr) %>%
+fips <- read_csv(here::here("data", "state_fips.csv")) %>% 
+  select(-abbr)%>%
   rename(STATEFP = FIPS) %>% 
   mutate(STATEFP = factor(STATEFP, levels = state_levels))
 fips
 ```
+### There is a error here... 
+
+
+## Use left_join to merge the data in a single file
+
+```{r}
+skin_cancer_adj <- left_join(skin_cancer_adj, fips)
+```
+
+```{r}
+states_df <- left_join(states_df, skin_cancer_adj)
+```
+
+## Plot 
+```{r}
+ggplot(states_df) +
+  geom_sf(aes(fill = relative_mort)) +
+  scale_fill_viridis_c(name = "Skin Cancer,\nRelative Mortality",
+                       option = "inferno") +
+  coord_sf(crs = st_crs(5070)) +
+  theme_bw() +
+  theme(legend.position = "bottom")
+```
+
+### Chropleth Map: My Turn
+
+## Import Data
+```{r}
+lyme_disease_raw <- read_csv(here::here("data", "lyme_disease.csv"))
+lyme_disease_raw
+```
+
+
+#####  need to finish this section
+
+### Part 3: Dot Distribution Map
+
+### Load Libraries
+```{r}
+library(raster)
+library(tidyverse)
+library(ggthemes)
+library(ggmap)
+
+```
+
+### Global Vars
+```{r}
+min_long <- -126
+max_long <- -104
+min_lat  <-   31
+max_lat  <-   50
+
+set.seed(9618973)
+```
+
+
+### Bigfoot Data
+```{r}
+bigfoot <- read_csv(here::here("data", "bigfoot.csv"))
+
+bigfoot <- bigfoot %>% 
+  filter(long >= min_long & long <= max_long,
+         lat >= min_lat & lat <= max_lat) %>% 
+  sample_n(300) %>% 
+  mutate(name = "Gigantopithecus") %>% 
+  dplyr::select(name, long, lat)
+```
+### Bear Data
+```{r}
+bears <- read_csv(here::here("data", "bears.csv"))
+
+both_species <- bind_rows(bigfoot, bears)
+
+head(both_species)
+```
+
+```{r}
+tail(both_species)
+```
+
+### Terrain Map
+```{r}
+base = get_stamenmap(bbox = c(min_long, 
+                              min_lat, 
+                              max_long, 
+                              max_lat),
+                     zoom = 4, 
+                     maptype = "terrain-background")
 
 
 
+ggmap(base)
+```
+### Terrain Map with Bigfoot location
+```{r}
+base <- ggmap(base)
+
+base + geom_point(data = bigfoot,
+                  aes(x = long,
+                      y = lat))
+```
+### Terrain Map with Bears Location
+```{r}
+base + geom_point(data = bears,
+                  aes(x = long,
+                      y = lat))
+```
+
+### Map with wooded areas bears prefer
+```{r}
+base + geom_point(data = both_species,
+                  aes(x = long,
+                      y = lat,
+                      shape = name,
+                      fill = name),
+                  size = 2) +
+  scale_shape_manual(values = c(22:23)) +
+  labs(x = "Longitude",
+       y = "Latitude",
+       fill = "Species",
+       shape = "Species")
+
+```
+### My Part of Part 3
+### Global Vars
+```{r}
+min_long <- -126
+max_long <- -104
+min_lat  <-   31
+max_lat  <-   50
+
+set.seed(9618973)
+```
+
+
+### Bigfoot Data
+```{r}
+bigfoot <- read_csv(here::here("data", "bigfoot.csv"))
+
+bigfoot <- bigfoot %>% 
+  filter(long >= min_long & long <= max_long,
+         lat >= min_lat & lat <= max_lat) %>% 
+  sample_n(300) %>% 
+  mutate(name = "Gigantopithecus") %>% 
+  dplyr::select(name, long, lat)
+```
+### Bear Data
+```{r}
+bears <- read_csv(here::here("data", "bears.csv"))
+
+both_species <- bind_rows(bigfoot, bears)
+
+head(both_species)
+```
+
+```{r}
+tail(both_species)
+```
+
+### Terrain Map
+```{r}
+base = get_stamenmap(bbox = c(min_long, 
+                              min_lat, 
+                              max_long, 
+                              max_lat),
+                     zoom = 4, 
+                     maptype = "terrain-background")
 
 
 
+ggmap(base)
+```
+### Terrain Map with Bigfoot location
+```{r}
+base <- ggmap(base)
 
+base + geom_point(data = bigfoot,
+                  aes(x = long,
+                      y = lat))
+```
+### Terrain Map with Bears Location
+```{r}
+base + geom_point(data = bears,
+                  aes(x = long,
+                      y = lat))
+```
+
+### Map with wooded areas bears prefer
+```{r}
+base + geom_point(data = both_species,
+                  aes(x = long,
+                      y = lat,
+                      shape = name,
+                      fill = name),
+                  size = 2) +
+  scale_shape_manual(values = c(22:23)) +
+  labs(x = "Longitude",
+       y = "Latitude",
+       fill = "Species",
+       shape = "Species")
+
+```
+### My Part of Part 3
+
+
+### Global Vars
+```{r}
+min_long <- -126
+max_long <- -104
+min_lat  <-   31
+max_lat  <-   50
+
+set.seed(1513373)
+```
+
+
+### Bigfoot Data
+```{r}
+bigfoot <- read_csv(here::here("data", "bigfoot.csv"))
+
+bigfoot <- bigfoot %>% 
+  filter(long >= min_long & long <= max_long,
+         lat >= min_lat & lat <= max_lat) %>% 
+  sample_n(300) %>% 
+  mutate(name = "Gigantopithecus") %>% 
+  dplyr::select(name, long, lat)
+```
+### Bear Data
+```{r}
+bears <- read_csv(here::here("data", "bears.csv"))
+
+both_species <- bind_rows(bigfoot, bears)
+
+head(both_species)
+```
+
+```{r}
+tail(both_species)
+```
+
+### Terrain Map
+```{r}
+base = get_stamenmap(bbox = c(min_long, 
+                              min_lat, 
+                              max_long, 
+                              max_lat),
+                     zoom = 4, 
+                     maptype = "terrain-background")
+
+
+
+ggmap(base)
+```
+### Terrain Map with Bigfoot location
+```{r}
+base <- ggmap(base)
+
+base + geom_point(data = bigfoot,
+                  aes(x = long,
+                      y = lat))
+```
+### Terrain Map with Bears Location
+```{r}
+base + geom_point(data = bears,
+                  aes(x = long,
+                      y = lat))
+```
+
+### Map with wooded areas bears prefer
+```{r}
+base + geom_point(data = both_species,
+                  aes(x = long,
+                      y = lat,
+                      shape = name,
+                      fill = name),
+                  size = 2) +
+  scale_shape_manual(values = c(22:23)) +
+  labs(x = "Longitude",
+       y = "Latitude",
+       fill = "Species",
+       shape = "Species")
+
+```
+
+### Part 4: Bathymetry
+
+### Load Libraries
+```{r}
+library(tidyverse)
+library(marmap)
+```
+
+### Global Vars
+```{r}
+min_long <- -170
+max_long <- 164
+min_lat  <- -42
+max_lat  <- -8
+```
 
 
 
